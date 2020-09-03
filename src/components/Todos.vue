@@ -21,10 +21,4 @@ export default {
         Todoitem
     }
 }
-</script>
-
-<style scoped>
-    * {
-        text-align: start;
-    }
-</style>  
+</script> 

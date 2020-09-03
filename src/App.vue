@@ -54,6 +54,5 @@ export default {
     font-family: AvenAir, Helvetica, Arial, sans-serif;
     color: #2c3e50;
     line-height: 1.4;
-    text-align: center;
   }
 </style>

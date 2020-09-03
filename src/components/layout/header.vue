@@ -20,7 +20,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <!-- just css for this component -->
 <style scoped>
-header {
-  margin: 50px;
-}
+    * {
+        padding: 20px;
+        text-align: center;
+    }
 </style>
