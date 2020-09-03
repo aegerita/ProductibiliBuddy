@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ msg + name }}</h1>
     <!-- do whatever hard coded html in this div --> 
   </div>
 </template>
@@ -9,15 +9,8 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+    name: String
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<!-- just css for this component -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-</style>
