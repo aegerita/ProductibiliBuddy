@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header>
         <h2>I see you are studying</h2>
         <HelloWorld msg="Good for you, " :name="name"/>
     </header>

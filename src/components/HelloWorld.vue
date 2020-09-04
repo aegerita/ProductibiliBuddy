@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ msg + name }}</h1>
     <!-- do whatever hard coded html in this div --> 
   </div>

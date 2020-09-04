@@ -1,7 +1,8 @@
 <template>
     <div>
         <!-- just like emit, but a function -->
-        <form @submit="addTodo" autocomplete="off">
+        <!-- prevent so don't refresh pages -->
+        <form @submit.prevent="addTodo" autocomplete="off">
             <!--  bind the input to the data title --> 
             <input type="text" name="title" v-model.trim="title" placeholder="Add Todo..." >
             <input type="submit" value="Submit" class="btn">
@@ -12,8 +13,6 @@
 <script>
 // to generate unique id for todo
 // maybe should be done with database
-import { v4 as uuidv4 } from "uuid";
-
 export default {
     name: "AddTodo",
     data() {
@@ -22,17 +21,12 @@ export default {
         }
     },
     methods: {
-        addTodo(e) {
-            // so the page wouldn't refresh and submit the form to a file
-            e.preventDefault();
-            console.log("new todo!");
-            const todo = {
-                id: uuidv4(),
-                title: this.title,
-                completed: false
+        addTodo() {
+            if (this.title){
+                console.log("new todo!");
+                this.$emit("add-todo", this.title);
+                this.title = "";
             }
-            this.title = "";
-            this.$emit("add-todo", todo);
         },
     }
 }

@@ -1,13 +1,14 @@
 <template>
     <!-- class complete when then the todo.completed is true -->
-    <div class="todo-item" v-bind:class="{'is-complete':todo.completed}" @click="markComplete">
+    <div :class="{'is-complete':todo.completed}" @click="markComplete">
         <h3>
             <!-- checkbox method -->
-            <input type="checkbox" :click="markComplete" :checked="todo.completed">
+            <input type="checkbox" :checked="todo.completed">
             {{todo.title}}
             <!-- send event -->
-            <button @click="$emit('del-todo')" class="del">X</button>
+            <button @click="$emit('del-todo')">X</button>
         </h3> 
+        
     </div>
 </template>
 
@@ -25,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-    .todo-item {
+    div {
         background: #f4f4f4;
         padding: 10px;
         border: 2px #cccccc dotted;
@@ -35,7 +36,7 @@ export default {
         text-decoration: line-through;
         background: #e0e0e0;
     }
-    .del {
+    button {
         background: transparent;
         color: #6f6f6f;
         font-size: 19px;
