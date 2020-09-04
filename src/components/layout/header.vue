@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld.vue";
+import HelloWorld from "../HelloWorld.vue";
 
 export default {
     name: "Header", 
@@ -20,8 +20,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <!-- just css for this component -->
 <style scoped>
-    * {
+    header {
         padding: 20px;
-        text-align: center;
     }
 </style>

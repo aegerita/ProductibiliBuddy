@@ -29,6 +29,7 @@ export default {
         background: #f4f4f4;
         padding: 10px;
         border: 2px #cccccc dotted;
+        text-align: start;
     }
     .is-complete {
         text-decoration: line-through;
