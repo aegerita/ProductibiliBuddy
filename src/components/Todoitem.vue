@@ -1,9 +1,9 @@
 <template>
     <!-- class complete when then the todo.completed is true -->
-    <div :class="{'is-complete':todo.completed}" @click="markComplete">
+    <div :class="{'is-complete':completed}" @click="markComplete">
         <h3>
             <!-- checkbox method -->
-            <input type="checkbox" :checked="todo.completed">
+            <input type="checkbox" :checked="completed">
             {{todo.title}}
             <!-- send event -->
             <button @click="$emit('del-todo')">X</button>
@@ -15,11 +15,11 @@
 <script>
 export default {
     name: "Todoitem",
-    props: ["todo"],
+    props: ["todo", "completed"],
     methods: {
         markComplete() {
             console.log("the checkbox is clicked!");
-            this.todo.completed = !this.todo.completed;
+            this.$emit('toggle-completion', this.completed, this.todo.id, this.todo.title);
         }
     }
 }
