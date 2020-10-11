@@ -21,6 +21,6 @@ export default {
 <!-- just css for this component -->
 <style scoped>
     header {
-        padding: 20px;
+        padding: 10px;
     }
 </style>
