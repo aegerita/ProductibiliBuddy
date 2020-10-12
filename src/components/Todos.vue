@@ -1,6 +1,6 @@
 <template>
     <div id="todo">
-        <Header @clear="clear" :name="name"/>
+        <Header @clear="clear" :username="username" @rename="rename"/>
         <AddTodo @add-todo="addTodo"/>
 
         <!-- A for loop for todos array in props -->
@@ -40,31 +40,34 @@ export default {
     // store things and variables and stuffs
     data() {
         return {
-            name: "Jenny",
+            username: '',
             todos: []
         }
     }, 
     mounted(){
+        if (localStorage.getItem('username')){
+            this.username = localStorage.getItem('username');
+        }
         if (localStorage.getItem('todos')) {
             try {
                 this.todos = JSON.parse(localStorage.getItem('todos'));
-                if (!this.todos.length){
-                    this.addTodo("Miss me?");
-                    this.addTodo("Thank you for using me...");
-                    this.addTodo("It's good to see you again");
-                    this.toggle(this.todos[2]);
-                }
             } catch(e) {
                 localStorage.removeItem('todos');
             }
-        } else {
-            this.addTodo("Welcome!");
-            this.addTodo("Pls use me as much as you like");
-            this.addTodo("Hehehe...");
+        } 
+        if (!this.todos.length){
+            if (localStorage.getItem('username')){
+                this.addTodo("Miss me?");
+                this.addTodo("Thank you for using me...");
+                this.addTodo("It's good to see you again");
+            } else {
+                this.addTodo("Welcome!");
+                this.addTodo("Pls use me as much as you like");
+                this.addTodo("Hehehe...");
+            }
             this.toggle(this.todos[2]);
         }
     },
-    // don't know back end and database, stay here upon refresh for now
     methods: {
         deleteTodo(deletee) {
             console.log("delete item number ", deletee.id);
@@ -95,6 +98,11 @@ export default {
         clear(){
             this.todos = [];
             this.save();
+            localStorage.removeItem('username');
+        },
+        rename(name){
+            console.log("store the new name", name);
+            this.username = name;
         }
     }
 }

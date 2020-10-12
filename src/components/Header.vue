@@ -1,8 +1,16 @@
 <template>
     <header>
         <h2>I see you are studying</h2>
-        <h1>{{ "Good for you, " + name }}</h1>
+        <h1>{{ "Good for you, " + (username ? username : "kind stranger!") }}</h1>
         <div id="bar">
+            <div v-show="!input" class="button">
+                <input v-if="username" @click="rename" type="submit" value="Change name">
+                <input v-else @click="rename" type="submit" value="Introduce yourself">
+            </div>
+            <form v-show="input" @submit.prevent="confirmName" class="button">
+                <input type="text" v-model.trim="newName" :placeholder="username ? username : 'Your name?'" ref="newName" id="newName">
+                <input type="submit" value="Submit">
+            </form>
             <input @click="$emit('clear')" type="submit" value="Clear all">
         </div>
     </header>
@@ -12,7 +20,27 @@
 
 export default {
     name: "Header", 
-    props: ["name"]
+    props: ["username"],
+    data(){
+        return {
+            input: false,
+            newName: ''
+        }
+    },
+    methods: {
+        rename(){
+            console.log("rename");
+            this.input = true;
+            this.$nextTick(() => this.$refs.newName.focus());
+        }, 
+        confirmName() {
+            if (this.newName){
+                this.$emit("rename", this.newName);
+            }
+            this.newName = '';
+            this.input = false;
+        }
+    }
 }
 </script>
 
@@ -30,9 +58,18 @@ export default {
         display: inline;
         font-weight: bold;
         color: #2c3e50;
+        margin: 0 5px;
     }
     #bar {
         text-align: right;
-        /* padding: 0 10px; */
+    }
+    .button {
+        display: inline;
+    }
+    form input[type="text"] {
+        margin-right: 0;
+    }
+    form input[type="submit"] {
+        margin-left: 0;
     }
 </style>

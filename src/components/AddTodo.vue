@@ -4,7 +4,7 @@
         <!-- prevent so don't refresh pages -->
         <form @submit.prevent="addTodo" autocomplete="off">
             <!--  bind the input to the data title --> 
-            <input type="text" name="title" v-model.trim="title" placeholder="Add Todo...">
+            <input type="text" v-model.trim="title" placeholder="Add Todo...">
             <input type="submit" value="Submit" class="btn">
         </form>
     </div>
