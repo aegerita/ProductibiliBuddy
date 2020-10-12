@@ -4,7 +4,7 @@
         <!-- prevent so don't refresh pages -->
         <form @submit.prevent="addTodo" autocomplete="off">
             <!--  bind the input to the data title --> 
-            <input type="text" name="title" v-model.trim="title" placeholder="Add Todo..." >
+            <input type="text" name="title" v-model.trim="title" placeholder="Add Todo...">
             <input type="submit" value="Submit" class="btn">
         </form>
     </div>
@@ -24,7 +24,14 @@ export default {
         addTodo() {
             if (this.title){
                 console.log("new todo!");
-                this.$emit("add-todo", this.title);
+                if (this.title.length < 50)
+                    this.$emit("add-todo", this.title);
+                else {
+                    alert("Come on, your todo has " +this.title.length + " characters?");
+                    if (confirm("I mean, I'll tolerate it if you were flirting with me;)")){
+                        this.$emit("add-todo", this.title);
+                    }
+                }
                 this.title = "";
             }
         },
@@ -35,7 +42,7 @@ export default {
 <style scoped>
     form {
         display: flex;
-        padding-top: 20px;
+        padding-top: 10px;
         padding-bottom: 30px;
     }
     input[type="text"] {
