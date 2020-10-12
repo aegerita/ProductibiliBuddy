@@ -103,6 +103,7 @@ export default {
         rename(name){
             console.log("store the new name", name);
             this.username = name;
+            localStorage.setItem('username', name);
         }
     }
 }
