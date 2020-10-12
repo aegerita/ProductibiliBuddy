@@ -1,12 +1,12 @@
 <template>
     <!-- class complete when then the todo.completed is true -->
-    <div :class="{'is-complete':completed}" @click="$emit('toggle-completion')">
+    <div :class="{'is-complete':completed}" @click="$emit('toggle', completed, todo)">
         <h3>
             <!-- checkbox method -->
             <input type="checkbox" :checked="completed">
             {{todo.title}}
             <!-- send event -->
-            <button @click.stop="$emit('del-todo')">X</button>
+            <button @click.stop="$emit('del-todo', todo.id)">X</button>
         </h3> 
         
     </div>
