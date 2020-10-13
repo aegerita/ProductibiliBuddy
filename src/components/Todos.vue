@@ -8,7 +8,7 @@
         <h2 v-if="todos.every(todo => todo.completed)">All Finished! Good for you!</h2>
         <div v-else>
             <h2 v-if="todos.some(todo => !todo.completed)">Todo List: </h2>
-            <div :key="todo.id" v-for="todo in todos.filter(todo => !todo.completed)">
+            <div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)">
                 <!-- the todo in for loop, goes to item props-->  
                 <Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
             </div>  
@@ -98,7 +98,7 @@ export default {
         clear(){
             this.todos = [];
             this.save();
-            localStorage.removeItem('username');
+            //localStorage.removeItem('username');
         },
         rename(name){
             console.log("store the new name", name);
