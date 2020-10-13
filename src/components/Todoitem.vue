@@ -6,7 +6,7 @@
             <input type="checkbox" :checked="todo.completed">
             {{todo.title}}
             <!-- send event -->
-            <button @click.stop="$emit('del-todo', todo.id)">X</button>
+            <button @click.stop="$emit('del-todo', todo)">X</button>
         </h3> 
         
     </div>
