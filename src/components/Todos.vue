@@ -1,25 +1,25 @@
 <template>
-    <div id="todo">
-        <Header @clear="clear" :username="username" @rename="rename"/>
-        <AddTodo @add-todo="addTodo"/>
+	<div id="todo">
+		<Header @clear="clear" :username="username" @rename="rename"/>
+		<AddTodo @add-todo="addTodo"/>
 
-        <!-- A for loop for todos array in props -->
-        <!-- there must be a unique key -->
-        <h2 v-if="todos.every(todo => todo.completed)">All Finished! Good for you!</h2>
-        <div v-else>
-            <h2 v-if="todos.some(todo => !todo.completed)">Todo List: </h2>
-            <div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)">
-                <!-- the todo in for loop, goes to item props-->  
-                <Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
-            </div>  
-            <!-- header finished:  -->
-            <h3 v-if="todos.some(todo => todo.completed)">Finished: </h3>
-        </div> 
-        <!-- output finished events last -->
-        <div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)">
-            <Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
-        </div>
-    </div>
+		<!-- A for loop for todos array in props -->
+		<!-- there must be a unique key -->
+		<h2 v-if="todos.every(todo => todo.completed)">All Finished! Good for you!</h2>
+		<div v-else>
+			<h2 v-if="todos.some(todo => !todo.completed)">Todo List: </h2>
+			<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)">
+				<!-- the todo in for loop, goes to item props-->  
+				<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+			</div>  
+			<!-- header finished:  -->
+			<h3 v-if="todos.some(todo => todo.completed)">Finished: </h3>
+		</div> 
+		<!-- output finished events last -->
+		<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)">
+			<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -29,85 +29,85 @@ import AddTodo from "./AddTodo.vue"
 import Todoitem from './Todoitem.vue'
 
 export default {
-    name: "Todos",
-    components: {
-        Header,
-        AddTodo,
-        Todoitem,
-    },
-    // store things and variables and stuffs
-    data() {
-        return {
-            username: '',
-            todos: []
-        }
-    }, 
-    mounted(){
-        if (localStorage.getItem('username')){
-            this.username = localStorage.getItem('username');
-        }
-        if (localStorage.getItem('todos')) {
-            try {
-                this.todos = JSON.parse(localStorage.getItem('todos'));
-            } catch(e) {
-                localStorage.removeItem('todos');
-            }
-        } 
-        if (!this.todos.length){
-            if (localStorage.getItem('username')){
-                this.addTodo("Miss me?");
-                this.addTodo("Thank you for using me...");
-                this.addTodo("It's good to see you again");
-            } else {
-                this.addTodo("Welcome!");
-                this.addTodo("Pls use me as much as you like");
-                this.addTodo("Hehehe...");
-            }
-            this.toggle(this.todos[2]);
-        }
-    },
-    methods: {
-        deleteTodo(deletee) {
-            console.log("delete item number ", this.todos.indexOf(deletee));
-            this.todos.splice(this.todos.indexOf(deletee), 1);
-            this.save();
-        }, 
-        addTodo(todoTitle) {
-            this.todos.push({
-                title: todoTitle,
-                completed: false,
-                time: Date.now()
-            });
-            this.save();
-        },
-        toggle(todo){
-            console.log("toggle item number ", this.todos.indexOf(todo));
-            todo.completed = !todo.completed;
-            todo.time = Date.now();
-            this.save();
-        },
-        save(){
-            const parsed = JSON.stringify(this.todos);
-            localStorage.setItem('todos', parsed);
-        }, 
-        clear(){
-            this.todos = [];
-            this.save();
-            //localStorage.removeItem('username');
-        },
-        rename(name){
-            console.log("store the new name", name);
-            this.username = name;
-            localStorage.setItem('username', name);
-        }
-    }
+	name: "Todos",
+	components: {
+		Header,
+		AddTodo,
+		Todoitem,
+	},
+	// store things and variables and stuffs
+	data() {
+		return {
+			username: '',
+			todos: []
+		}
+	}, 
+	mounted(){
+		if (localStorage.getItem('username')){
+			this.username = localStorage.getItem('username');
+		}
+		if (localStorage.getItem('todos')) {
+			try {
+				this.todos = JSON.parse(localStorage.getItem('todos'));
+			} catch(e) {
+				localStorage.removeItem('todos');
+			}
+		} 
+		if (!this.todos.length){
+			if (localStorage.getItem('username')){
+				this.addTodo("Miss me?");
+				this.addTodo("Thank you for using me...");
+				this.addTodo("It's good to see you again");
+			} else {
+				this.addTodo("Welcome!");
+				this.addTodo("Pls use me as much as you like");
+				this.addTodo("Hehehe...");
+			}
+			this.toggle(this.todos[2]);
+		}
+	},
+	methods: {
+		deleteTodo(deletee) {
+			console.log("delete item number ", this.todos.indexOf(deletee));
+			this.todos.splice(this.todos.indexOf(deletee), 1);
+			this.save();
+		}, 
+		addTodo(todoTitle) {
+			this.todos.push({
+				title: todoTitle,
+				completed: false,
+				time: Date.now()
+			});
+			this.save();
+		},
+		toggle(todo){
+			console.log("toggle item number ", this.todos.indexOf(todo));
+			todo.completed = !todo.completed;
+			todo.time = Date.now();
+			this.save();
+		},
+		save(){
+			const parsed = JSON.stringify(this.todos);
+			localStorage.setItem('todos', parsed);
+		}, 
+		clear(){
+			this.todos = [];
+			this.save();
+			//localStorage.removeItem('username');
+		},
+		rename(name){
+			console.log("store the new name", name);
+			this.username = name;
+			localStorage.setItem('username', name);
+		}
+	}
 }
 </script> 
 
 <style scoped>
-    #todo {
-        font-family: AvenAir, Helvetica, Arial, sans-serif;
-        line-height: 1.4;
-        padding: 0 20px;
-    }
+	#todo {
+		font-family: AvenAir, Helvetica, Arial, sans-serif;
+		line-height: 1.4;
+		padding: 0 20px;
+	}
 </style>
