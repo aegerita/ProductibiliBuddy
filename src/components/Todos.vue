@@ -16,7 +16,7 @@
             <h3 v-if="todos.some(todo => todo.completed)">Finished: </h3>
         </div> 
         <!-- output finished events last -->
-        <div :key="todo.id" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)">
+        <div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)">
             <Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
         </div>
     </div>
@@ -27,8 +27,6 @@
 import Header from "./Header";
 import AddTodo from "./AddTodo.vue"
 import Todoitem from './Todoitem.vue'
-
-let nextTodoId = 0;
 
 export default {
     name: "Todos",
@@ -70,15 +68,12 @@ export default {
     },
     methods: {
         deleteTodo(deletee) {
-            console.log("delete item number ", deletee.id);
-            this.todos.splice(deletee.id, 1);
-            this.todos.forEach(todo => {if (todo.id > deletee.id) todo.id--;})
-            nextTodoId--;
+            console.log("delete item number ", this.todos.indexOf(deletee));
+            this.todos.splice(this.todos.indexOf(deletee), 1);
             this.save();
         }, 
         addTodo(todoTitle) {
             this.todos.push({
-                id: nextTodoId++,
                 title: todoTitle,
                 completed: false,
                 time: Date.now()
@@ -86,7 +81,7 @@ export default {
             this.save();
         },
         toggle(todo){
-            console.log("toggle id number ", todo.id);
+            console.log("toggle item number ", this.todos.indexOf(todo));
             todo.completed = !todo.completed;
             todo.time = Date.now();
             this.save();
