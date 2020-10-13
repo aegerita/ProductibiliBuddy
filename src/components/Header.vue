@@ -4,13 +4,13 @@
 		<h1>{{ "Good for you, " + (username ? username : "kind stranger!") }}</h1>
 		<div id="bar">
 			<div v-show="!input" class="button">
-				<input v-if="username" @click="rename" type="submit" value="Change name">
-				<input v-else @click="rename" type="submit" value="Introduce yourself">
+				<input @click="rename" type="submit" :value="username?'Change name':'Introduce yourself'">
 			</div>
 			<form v-show="input" @submit.prevent="confirmName" class="button">
 				<input type="text" v-model.trim="newName" :placeholder="username ? username : 'Your name?'" ref="newName" id="newName">
 				<input type="submit" value="Submit">
 			</form>
+			<input @click="toggleDisplay()" type="submit" :value="'Display: '+(display?'Horizontal':'Vertical')">
 			<input @click="$emit('clear')" type="submit" value="Clear all">
 		</div>
 	</header>
@@ -20,7 +20,7 @@
 
 export default {
 	name: "Header", 
-	props: ["username"],
+	props: ["username", "display"],
 	data(){
 		return {
 			input: false,
@@ -39,6 +39,11 @@ export default {
 			}
 			this.newName = '';
 			this.input = false;
+		},
+		toggleDisplay(){
+			console.log('store display to', !this.display);
+			localStorage.setItem('display', !this.display);
+			this.$emit('input', !this.display);
 		}
 	}
 }

@@ -1,23 +1,27 @@
 <template>
 	<div id="todo">
-		<Header @clear="clear" :username="username" @rename="rename"/>
+		<Header @clear="clear" :username="username" :display="display" @rename="rename" v-model="display"/>
 		<AddTodo @add-todo="addTodo"/>
 
 		<!-- A for loop for todos array in props -->
 		<!-- there must be a unique key -->
-		<h2 v-if="todos.every(todo => todo.completed)">All Finished! Good for you!</h2>
-		<div v-else>
-			<h2 v-if="todos.some(todo => !todo.completed)">Todo List: </h2>
-			<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)">
-				<!-- the todo in for loop, goes to item props-->  
-				<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
-			</div>  
-			<!-- header finished:  -->
-			<h3 v-if="todos.some(todo => todo.completed)">Finished: </h3>
-		</div> 
-		<!-- output finished events last -->
-		<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)">
-			<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+		<h2 v-show="todos.every(todo => todo.completed)">All Finished! Good for you!</h2>
+		<div :class="{'horizontal' : display}">
+			<div id="left">
+				<h2 v-show="todos.some(todo => !todo.completed)">Todo List: </h2>
+				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)">
+					<!-- the todo in for loop, goes to item props-->  
+					<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+				</div>  
+			</div> 
+			<!-- output finished events last -->
+			<div id="right">
+				<!-- header finished:  -->
+				<h3 v-show="todos.some(todo => todo.completed) && !todos.every(todo => todo.completed)">Finished: </h3>
+				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)">
+					<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -39,12 +43,19 @@ export default {
 	data() {
 		return {
 			username: '',
+			display: false,
 			todos: []
 		}
 	}, 
 	mounted(){
 		if (localStorage.getItem('username')){
 			this.username = localStorage.getItem('username');
+			console.log('username:', this.username);
+		}
+		if (localStorage.getItem('display')){
+			// can't store boolean
+			this.display = JSON.parse(localStorage.getItem('display'));
+			console.log('display:', this.display);
 		}
 		if (localStorage.getItem('todos')) {
 			try {
@@ -109,5 +120,21 @@ export default {
 		font-family: AvenAir, Helvetica, Arial, sans-serif;
 		line-height: 1.4;
 		padding: 0 20px;
+	}
+	.horizontal {
+		display: flex;
+	}
+	.horizontal #left{
+		flex: 1;
+		padding: 0 15px 10px 10px;
+	}
+	.horizontal #right{
+		flex: 1;
+		padding: 0 10px 10px 15px;
+	}
+	.horizontal h2, .horizontal h3{
+		font-size: 18px;
+		margin: 20px;
+		text-align: start;
 	}
 </style>
