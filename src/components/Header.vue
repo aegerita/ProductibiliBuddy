@@ -10,10 +10,12 @@
 				<input type="text" v-model.trim="newName" :placeholder="username ? username : 'Your name?'" ref="newName" id="newName">
 				<input type="submit" value="Submit">
 			</form>
-			<input @click="$emit('redo')" type="submit" value="Redo">
-			<input @click="$emit('undo')" type="submit" value="Undo">
 			<input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'">
-			<input @click="clear()" type="submit" value="Clear all">
+			<div>
+				<input @click="$emit('undo')" type="submit" value="Undo">
+				<input @click="$emit('redo')" type="submit" value="Redo">
+				<input @click="clear()" type="submit" value="Clear all">
+			</div>
 		</div>
 	</header>
 </template>
@@ -70,9 +72,13 @@ export default {
 		font-weight: bold;
 		color: #2c3e50;
 		margin: 0 5px;
+		background: #f6f6f6;
 	}
 	#bar {
 		text-align: right;
+	}
+	#bar div {
+		display: inline-flex;
 	}
 	.button {
 		display: inline;
