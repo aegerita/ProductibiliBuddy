@@ -1,6 +1,6 @@
 <template>
 	<div id="todo">
-		<Header @clear="clear" :username="username" :display="display" @rename="rename" v-model="display"/>
+		<Header @clear="clear" @rename="rename" @undo='undo' @redo='redo' :username="username" :display="display" v-model="display"/>
 		<AddTodo @add-todo="addTodo"/>
 
 		<!-- A for loop for todos array in props -->
@@ -42,9 +42,11 @@ export default {
 	// store things and variables and stuffs
 	data() {
 		return {
+			historyIndex: 0,
 			username: '',
 			display: false,
-			todos: []
+			todos: [],
+			history: []
 		}
 	}, 
 	mounted(){
@@ -64,6 +66,7 @@ export default {
 				localStorage.removeItem('todos');
 			}
 		} 
+		this.save();
 		if (!this.todos.length){
 			if (localStorage.getItem('username')){
 				this.addTodo("Miss me?");
@@ -76,6 +79,14 @@ export default {
 			}
 			this.toggle(this.todos[2]);
 		}
+	},
+	created(){
+		document.onkeydown = evt => {
+			evt = evt || window.event;
+			if (evt.ctrlKey && evt.code === 'KeyZ') {
+				evt.shiftKey ? this.redo() : this.undo();
+			}
+		};
 	},
 	methods: {
 		deleteTodo(deletee) {
@@ -98,6 +109,9 @@ export default {
 			this.save();
 		},
 		save(){
+			// remove "future" history
+			this.history = this.history.slice(0, this.historyIndex++);
+			this.history.push(JSON.parse(JSON.stringify(this.todos)));
 			const parsed = JSON.stringify(this.todos);
 			localStorage.setItem('todos', parsed);
 		}, 
@@ -110,6 +124,21 @@ export default {
 			console.log("store the new name", name);
 			this.username = name;
 			localStorage.setItem('username', name);
+		}, 
+		undo(){
+			if (this.historyIndex > 1){
+				this.todos = JSON.parse(JSON.stringify(this.history[--this.historyIndex-1]));
+				console.log('copy history number ', this.historyIndex-1);
+			}
+			const parsed = JSON.stringify(this.todos);
+			localStorage.setItem('todos', parsed);
+		},
+		redo(){
+			if (this.historyIndex < this.history.length){
+				this.todos = JSON.parse(JSON.stringify(this.history[++this.historyIndex-1]));
+			}
+			const parsed = JSON.stringify(this.todos);
+			localStorage.setItem('todos', parsed);
 		}
 	}
 }

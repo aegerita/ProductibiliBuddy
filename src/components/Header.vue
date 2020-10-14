@@ -10,8 +10,10 @@
 				<input type="text" v-model.trim="newName" :placeholder="username ? username : 'Your name?'" ref="newName" id="newName">
 				<input type="submit" value="Submit">
 			</form>
-			<input @click="toggleDisplay()" type="submit" :value="'Display: '+(display?'Horizontal':'Vertical')">
-			<input @click="$emit('clear')" type="submit" value="Clear all">
+			<input @click="$emit('redo')" type="submit" value="Redo">
+			<input @click="$emit('undo')" type="submit" value="Undo">
+			<input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'">
+			<input @click="clear()" type="submit" value="Clear all">
 		</div>
 	</header>
 </template>
@@ -44,6 +46,10 @@ export default {
 			console.log('store display to', !this.display);
 			localStorage.setItem('display', !this.display);
 			this.$emit('input', !this.display);
+		}, 
+		clear(){
+			if (confirm('Are you sure you wanna abandon these precious todos?'))
+				this.$emit('clear');
 		}
 	}
 }

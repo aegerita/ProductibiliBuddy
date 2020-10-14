@@ -5,15 +5,15 @@
 			<router-link to="/about">About</router-link>
 		</div>
 		<keep-alive>
-				<router-view/>
+			<router-view/>
 		</keep-alive>
 		<div id="tail">
-				<p>
-					User data kept in local storage<br>
-					Don't eat your cookies! <br>
-				</p>
-				<p><strong>More by <a href="https://github.com/aegerita">Aegerita</a></strong></p>
-			</div>
+			<p>
+				User data kept in local storage<br>
+				Don't eat your cookies! <br>
+			</p>
+			<p><strong>More by <a href="https://github.com/aegerita">Aegerita</a></strong></p>
+		</div>
 	</div>
 </template>
 

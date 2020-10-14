@@ -1,6 +1,6 @@
 <template>
 	<!-- class complete when then the todo.completed is true -->
-	<div :class="{'is-complete':todo.completed}" @click="$emit('toggle', todo)">
+	<div :class="{'is-complete':todo.completed}" @click="$emit('toggle', todo)" @click.right.prevent="$emit('del-todo', todo)">
 		<h3>
 			<!-- checkbox method -->
 			<input type="checkbox" :checked="todo.completed">
