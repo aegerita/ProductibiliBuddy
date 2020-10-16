@@ -9,17 +9,22 @@
 		<div :class="{'horizontal' : display}">
 			<div id="left">
 				<h2 v-show="todos.some(todo => !todo.completed)">Todo List: </h2>
-				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)">
+				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)" @drop="drop($event, false)" @dragover.prevent @dragenter.prevent>
 					<!-- the todo in for loop, goes to item props-->  
-					<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+					<div draggable @dragstart='drag($event, todo)' @drag='drag($event, todo)'>
+						<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+					</div>
 				</div>  
 			</div> 
 			<!-- output finished events last -->
 			<div id="right">
 				<!-- header finished:  -->
-				<h3 v-show="todos.some(todo => todo.completed) && !todos.every(todo => todo.completed)">Finished: </h3>
-				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)">
-					<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+				<h3 v-show="todos.some(todo=>todo.completed) && !todos.every(todo=>todo.completed)">Finished: </h3>
+				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)" @drop="drop($event, true)" @dragover.prevent @dragenter.prevent>
+					<!-- drag can only be div -->
+					<div draggable @dragstart='drag($event, todo)' @drag='drag($event, todo)'>
+						<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -139,6 +144,19 @@ export default {
 			}
 			const parsed = JSON.stringify(this.todos);
 			localStorage.setItem('todos', parsed);
+		}, 
+		drag: (evt, item) => {
+			evt.dataTransfer.dropEffect = 'move';
+			evt.dataTransfer.effectAllowed = 'move';
+			evt.dataTransfer.setData('todo', item.title);
+		}, 
+		drop (evt, completed) {
+			console.log("transfer this", evt.dataTransfer.getData('todo'));
+			const title = evt.dataTransfer.getData('todo');
+			const todo = this.todos.find(todo => todo.title === title)
+			if (todo.completed != completed){
+				this.toggle(todo);
+			}
 		}
 	}
 }
