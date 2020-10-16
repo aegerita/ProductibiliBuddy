@@ -3,17 +3,24 @@
 		<h2>I see you are studying</h2>
 		<h1>{{ "Good for you, " + (username ? username : "kind stranger!") }}</h1>
 		<div id="bar">
-			<div v-show="!input" class="button">
+			<div v-show="!input" class="together">
 				<input @click="rename" type="submit" :value="username?'Change name':'Introduce yourself'">
 			</div>
-			<form v-show="input" @submit.prevent="confirmName" class="button">
+			<form v-show="input" @submit.prevent="confirmName" class="together">
 				<input type="text" v-model.trim="newName" :placeholder="username ? username : 'Your name?'" ref="newName" id="newName">
 				<input type="submit" value="Submit">
 			</form>
+
 			<input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'">
-			<div>
-				<input @click="$emit('undo')" type="submit" value="Undo">
-				<input @click="$emit('redo')" type="submit" value="Redo">
+			<div class="together">
+				<popper :delay-on-mouse-over='800' :visible-arrow='false' :options="{placement: 'bottom'}">
+					<div class="popper">ctrl+z</div>
+					<input slot="reference" @click="$emit('undo')" type="submit" value="Undo">
+				</popper>
+				<popper :delay-on-mouse-over='800' :visible-arrow='false' :options="{placement: 'bottom'}">
+					<div class="popper">ctrl+shift+z</div>
+					<input slot="reference" @click="$emit('redo')" type="submit" value="Redo">
+				</popper>
 				<input @click="clear()" type="submit" value="Clear all">
 			</div>
 		</div>
@@ -21,10 +28,15 @@
 </template>
 
 <script>
+import Popper from 'vue-popperjs';
+import 'vue-popperjs/dist/vue-popper.css';
 
 export default {
 	name: "Header", 
 	props: ["username", "display"],
+	components: {
+      'popper': Popper
+    },
 	data(){
 		return {
 			input: false,
@@ -77,16 +89,18 @@ export default {
 	#bar {
 		text-align: right;
 	}
-	#bar div {
+	.together {
 		display: inline-flex;
-	}
-	.button {
-		display: inline;
 	}
 	form input[type="text"] {
 		margin-right: 0;
 	}
 	form input[type="submit"] {
 		margin-left: 0;
+	}
+	.popper {
+		background:rgba(1,1,1,0.5);
+		color: #f6f6f6;
+		border: transparent;
 	}
 </style>

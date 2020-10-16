@@ -1,20 +1,29 @@
 <template>
 	<!-- class complete when then the todo.completed is true -->
-	<div :class="{'is-complete':todo.completed}" @click="$emit('toggle', todo)" @click.right.prevent="$emit('del-todo', todo)">
+	<div :class="{'is-complete':todo.completed}" @click="$emit('toggle', todo)" @click.right.prevent="$emit('del-todo', todo)" draggable="true">
 		<h3>
 			<!-- checkbox method -->
 			<input type="checkbox" :checked="todo.completed">
 			{{todo.title}}
 			<!-- send event -->
-			<button @click.stop="$emit('del-todo', todo)">X</button>
+			<popper :delay-on-mouse-over='1000' :visible-arrow='false' :options="{placement: 'bottom'}">
+				<div class="popper">(right click todo to delete)</div>
+				<button slot="reference" @click.stop="$emit('del-todo', todo)">X</button>
+			</popper>
 		</h3>
 	</div>
 </template>
 
 <script>
+import Popper from 'vue-popperjs';
+import 'vue-popperjs/dist/vue-popper.css';
+
 export default {
 	name: "Todoitem",
-	props: ["todo"]
+	props: ["todo"],
+	components: {
+		'popper': Popper
+    },
 }
 </script>
 
@@ -39,5 +48,11 @@ export default {
 		border: dotted 1px;
 		padding: 4px 8px;
 		border-radius: 50%;
+	}
+	.popper {
+		background:rgba(1,1,1,0.5);
+		color: #f6f6f6;
+		border: transparent;
+		padding: 0;
 	}
 </style>
