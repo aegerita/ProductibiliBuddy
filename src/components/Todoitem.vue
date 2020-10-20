@@ -7,7 +7,7 @@
 			{{todo.title}}
 			<!-- send event -->
 			<popper :delay-on-mouse-over='1000' :visible-arrow='false' :options="{placement: 'bottom'}">
-				<div class="popper">(right click todo to delete)</div>
+				<div class="popper">(right click todo to delete faster)</div>
 				<button slot="reference" @click.stop="$emit('del-todo', todo)">X</button>
 			</popper>
 		</h3>

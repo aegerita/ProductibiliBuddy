@@ -1,7 +1,7 @@
 <template>
 	<header>
-		<h2>I see you are studying</h2>
-		<h1>{{ "Good for you, " + (username ? username : "kind stranger!") }}</h1>
+		<h2>{{ welcome[0] }}</h2>
+		<h1>{{ welcome[1] }}</h1>
 		<div id="bar">
 			<div v-show="!input" class="together">
 				<input @click="rename" type="submit" :value="username?'Change name':'Introduce yourself'">
@@ -43,6 +43,25 @@ export default {
 			newName: ''
 		}
 	},
+	computed:{
+		welcome: function() {
+			let name = this.username ? this.username : "kind stranger";
+			var welcomes = [
+				["I see you are studying" , "Good for you, " + name + "!"],
+				["Nice to see you, " + name + ".", "Good luck on these tasks!"],
+				["Thank you for using me, "+name, "Link at the bottom to check out more!"],
+				["I love the stars. ", "Do you, "+name+"?"],
+				["They say ya need to be smart 'bout how ya work", "Good thing you use ME!"],
+				["Hard work, perseverence, determination ... Who cares?","Let's do whatever we want, "+name],
+				["I will always support you, "+name+"!", "That is, if you finish some of these todos;)"],
+				["I looks so pretty thanks to Vue.js","And of course, your support,  "+name+"!"],
+				["Hmmmmm, you seem stuck, "+name, "Have you ever thought of ... Pivoting?"],
+				["Arbeit Macht Frei isn't good for you, "+name, "Take some rest if you are overwhelmed!"],
+				["How about we grab a drink after you've done all this?", "Kidding, "+name+", you have too much work to do."],
+			];
+			return welcomes[Math.floor(Math.random()*welcomes.length)];
+		}
+	},
 	methods: {
 		rename(){
 			console.log("rename");
@@ -51,7 +70,9 @@ export default {
 		}, 
 		confirmName() {
 			if (this.newName){
-				this.$emit("rename", this.newName);
+				if (this.newName.length < 20)
+					this.$emit("rename", this.newName);
+				else alert("No");
 			}
 			this.newName = '';
 			this.input = false;
