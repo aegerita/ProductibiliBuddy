@@ -49,7 +49,7 @@ export default {
 		return {
 			historyIndex: 0,
 			username: '',
-			display: false,
+			display: window.innerWidth > 500,
 			todos: [],
 			history: []
 		}
@@ -59,11 +59,12 @@ export default {
 			this.username = localStorage.getItem('username');
 			console.log('username:', this.username);
 		}
+		/* // do i want to detect screen width everytime?
 		if (localStorage.getItem('display')){
 			// can't store boolean
 			this.display = JSON.parse(localStorage.getItem('display'));
 			console.log('display:', this.display);
-		}
+		}*/
 		if (localStorage.getItem('todos')) {
 			try {
 				this.todos = JSON.parse(localStorage.getItem('todos'));
@@ -173,11 +174,15 @@ export default {
 	}
 	.horizontal #left{
 		flex: 1;
-		padding: 0 15px 10px 10px;
+		padding: 0 15px 0 10px;
 	}
 	.horizontal #right{
 		flex: 1;
-		padding: 0 10px 10px 15px;
+		padding: 0 10px 0 15px;
+	}
+	@media only screen and (max-width: 700px) {
+		#todo { padding: 0 15px; }
+		.horizontal #left, #right{ padding: 0 8px; }
 	}
 	.horizontal h2, .horizontal h3{
 		font-size: 18px;

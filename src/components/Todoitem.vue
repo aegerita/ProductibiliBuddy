@@ -49,6 +49,19 @@ export default {
 		padding: 4px 8px;
 		border-radius: 50%;
 	}
+	h3 {
+		margin: 15px 0;
+	}
+	@media only screen and (max-width: 500px) {
+		h3 { 
+			margin: 10px 1px;
+		}
+	}
+	@media only screen and (max-width: 400px) {
+		h3 { 
+			font-size: 17px; 
+		}
+	}
 	.popper {
 		background:rgba(1,1,1,0.5);
 		color: #f6f6f6;

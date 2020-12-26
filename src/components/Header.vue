@@ -2,6 +2,7 @@
 	<header>
 		<h2>{{ welcome[0] }}</h2>
 		<h1>{{ welcome[1] }}</h1>
+
 		<div id="bar">
 			<div v-show="!input" class="together">
 				<input @click="rename" type="submit" :value="username?'Change name':'Introduce yourself'">
@@ -12,6 +13,7 @@
 			</form>
 
 			<input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'">
+
 			<div class="together">
 				<popper :delay-on-mouse-over='500' :visible-arrow='false' :options="{placement: 'bottom'}">
 					<div class="popper">ctrl+z</div>
@@ -101,6 +103,14 @@ export default {
 <style scoped>
 	header {
 		padding: 10px;
+	}
+	@media only screen and (max-width: 700px) {
+		h2 { font-size: 20px; }
+		h1 { font-size: 27px; }
+	}
+	@media only screen and (max-width: 385px) {
+		h2 { font-size: 16px; }
+		h1 { font-size: 22px; }
 	}
 	input {
 		border: dotted 2px;
