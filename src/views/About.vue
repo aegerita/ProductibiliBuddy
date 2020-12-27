@@ -1,10 +1,11 @@
 <template>
-	<div class="about" style="padding:20px">
+	<div class="about" style="padding:20px 20px 0 20px">
 		<h1>This is an about page</h1>
-		<div style="padding:10px;">
-			<h2>Thank you for your support!</h2>
+		<div style="padding: 10px 0 25px 0;">
+			<h2>Thanks for your support!</h2>
+			<h2>Still under contruction</h2>
 		</div>
-		<div id="function">
+		<div class="description">
 			<h2>Functions:</h2>
 			<ul>
 				<li>Kindly greets you with random phrases</li>
@@ -16,27 +17,32 @@
 				<li>Easter eggs</li>
 			</ul>
 		</div>
-		<div style="padding:30px;">
-			<h2>Still under contruction</h2>
-			<h2>Don't peek!</h2>
+		<div class="description">
+			<h2>Keyboard Shortcuts:</h2>
+			<ul>
+				<li>Undo: ctrl+z</li>
+				<li>Redo: ctrl+shift+z</li>
+				<li>Delete todo: right click</li>
+			</ul>
 		</div>
 	</div>
 </template>
 
 <style scoped>
-	#function {
+	.description {
 		display: flex;
 		padding: 0 40pt;
 	}
-	#function ul {
+	ul {
 		flex: 1.7;
 		text-align: start;
+		font-size: 12.5pt;
 	}
-	#function h2 {
+	h2 {
 		flex: 1;
 	}
 	@media only screen and (max-width: 500px) {
-		#function {
+		.description {
 			display: block;
 			padding: 0pt;
 		}

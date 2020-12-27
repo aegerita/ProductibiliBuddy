@@ -5,17 +5,22 @@ just started learning vue. hopefully i can add back-end to this stuff later
 
 still using vue2 for now, hopefully i can update this with vuex and vue3 before coop
 
-# Functions
+## Functions
 
 - Kindly greets you with random phrases
 - Store todos in cookies
 - Two pleasing layouts
+    - horizontal
+    - vertical 
 - Undo / Redo
 - Drag and drop (with html)
 - Keyboard shortcuts & Tooltips
+    - undo: ctrl+z
+    - redo: ctrl+shift+z
+    - delete todo: right click
 - Easter eggs
 
-# Vue
+## Vue
 
 somebody may ask: "why don't you learn react or angular?" 
 
