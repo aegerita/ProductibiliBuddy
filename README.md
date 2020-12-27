@@ -9,9 +9,7 @@ still using vue2 for now, hopefully i can update this with vuex and vue3 before 
 
 - Kindly greets you with random phrases
 - Store todos in cookies
-- Two pleasing layouts
-    - horizontal
-    - vertical 
+- Horizontal / Vertical layouts
 - Undo / Redo
 - Drag and drop (with html)
 - Keyboard shortcuts & Tooltips

@@ -10,7 +10,7 @@
 			<ul>
 				<li>Kindly greets you with random phrases</li>
 				<li>Store todos in cookies</li>
-				<li>Two pleasing layouts</li>
+				<li>Horizontal / Vertical layouts</li>
 				<li>Undo / Redo</li>
 				<li>Drag and drop (with html)</li>
 				<li>Keyboard shortcuts & Tooltips</li>
