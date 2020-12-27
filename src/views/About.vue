@@ -22,6 +22,7 @@
 			<ul>
 				<li>Undo: ctrl+z</li>
 				<li>Redo: ctrl+shift+z</li>
+				<li>Add todo: enter</li>
 				<li>Delete todo: right click</li>
 			</ul>
 		</div>
