@@ -1,7 +1,7 @@
 <template>
 	<!-- class complete when then the todo.completed is true -->
 	<div :class="{'is-complete':todo.completed}" @click="$emit('toggle', todo)" @click.right.prevent="$emit('del-todo', todo)" draggable="true">
-		<h3>
+		<h3 :class="{'horizontal' : display}">
 			<!-- checkbox method -->
 			<input type="checkbox" :checked="todo.completed">
 			{{todo.title}}
@@ -20,7 +20,7 @@ import 'vue-popperjs/dist/vue-popper.css';
 
 export default {
 	name: "Todoitem",
-	props: ["todo"],
+	props: ["todo", "display"],
 	components: {
 		'popper': Popper
     },
@@ -49,18 +49,15 @@ export default {
 		padding: 4px 8px;
 		border-radius: 50%;
 	}
-	h3 {
-		margin: 15px 0;
+	h3 { margin: 15px 0; }
+	.horizontal h3 { margin: 20px 0; }
+	@media only screen and (max-width: 600px) {
+		h3 { margin: 10px 1px; }
+		.horizontal h3 { margin: 15px 0; }
+		button { font-size: 14px;}
 	}
-	@media only screen and (max-width: 500px) {
-		h3 { 
-			margin: 10px 1px;
-		}
-	}
-	@media only screen and (max-width: 400px) {
-		h3 { 
-			font-size: 17px; 
-		}
+	@media only screen and (max-width: 450px) {
+		h3 { font-size: 17px; }
 	}
 	.popper {
 		background:rgba(1,1,1,0.5);

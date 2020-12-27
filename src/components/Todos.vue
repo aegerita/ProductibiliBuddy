@@ -12,7 +12,7 @@
 				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => !todo.completed)" @drop="drop($event, false)" @dragover.prevent @dragenter.prevent>
 					<!-- the todo in for loop, goes to item props-->  
 					<div draggable @dragstart='drag($event, todo)' @drag='drag($event, todo)'>
-						<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+						<Todoitem :todo="todo" :display="display" @toggle="toggle" @del-todo="deleteTodo"/>
 					</div>
 				</div>  
 			</div> 
@@ -23,7 +23,7 @@
 				<div :key="todos.indexOf(todo)" v-for="todo in todos.filter(todo => todo.completed).sort((a,b) => a.time-b.time)" @drop="drop($event, true)" @dragover.prevent @dragenter.prevent>
 					<!-- drag can only be div -->
 					<div draggable @dragstart='drag($event, todo)' @drag='drag($event, todo)'>
-						<Todoitem :todo="todo" @toggle="toggle" @del-todo="deleteTodo"/>
+						<Todoitem :todo="todo" :display="display" @toggle="toggle" @del-todo="deleteTodo"/>
 					</div>
 				</div>
 			</div>
