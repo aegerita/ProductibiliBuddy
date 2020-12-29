@@ -38,7 +38,7 @@ export default {
           ["Arbeit Macht Frei isn't good for you, "+name, "Take some rest if you are overwhelmed!"],
           ["How about we grab a drink after you've done all this?", "Kidding, "+name+", you have too much work to do."],
           ["I personally prefer horizontal layout than vertical", "But it's your choice, "+name+"!"],
-          // ["I am waiting for a migration guide to vue 3", "Gotta know Composition API by then..."],
+          ["Aren't you glad I improved so much, "+name+"?", "哔哩哔哩(゜-゜)つロ干杯~"],
           ["Hey, it's really nice seeing you here", "Thanks for making me less lonely, "+name],
           ["Does it matter whether I use Vuex?", "Actually it does. Just wait for it, "+name],
           ["Do you think I can evolve like pokemon, "+name+"?", "Maybe someday I can tell you the weather!"],

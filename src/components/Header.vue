@@ -24,7 +24,7 @@
 <script>
 import { useStore, mapState } from 'vuex';
 import { ref, nextTick } from 'vue';
-import welcome from './welcomes'
+import welcome from './Message'
 
 export default {
     components: { welcome },

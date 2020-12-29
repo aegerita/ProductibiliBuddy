@@ -36,9 +36,9 @@
 <script>
 import { onMounted } from 'vue'
 import { useStore, mapState, mapGetters } from 'vuex';
-import Header from '@/components/Header';
-import AddTodo from '@/components/AddTodo';
-import Todoitem from '@/components/Todoitem'
+import Header from './Header';
+import AddTodo from './AddTodo';
+import Todoitem from './Todoitem'
 
 export default {
   components: { Header, AddTodo, Todoitem },
