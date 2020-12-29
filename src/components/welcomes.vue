@@ -1,6 +1,8 @@
 <template>
-  <h2>{{ welcome ? welcome[0] : "lol seems like there is a glitch"}}</h2>
-  <h1>{{ welcome ? welcome[1] : "Be honoured to witness this!" }}</h1>
+  <div>
+    <h2>{{ welcome ? welcome[0] : "lol seems like there is a glitch"}}</h2>
+    <h1>{{ welcome ? welcome[1] : "Be honoured to witness this!" }}</h1>
+  </div>
 </template>
 
 <script>

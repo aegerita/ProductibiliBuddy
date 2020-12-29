@@ -62,13 +62,11 @@ export default {
 			evt.dataTransfer.setData('todo', item.title);
     };
      
-		const drop = (evt, completed) => {
+		const drop = (evt, newStatus) => {
 			console.log("transfer this", evt.dataTransfer.getData('todo'));
 			const title = evt.dataTransfer.getData('todo');
-			const todo = store.state.todos.find(todo => todo.title === title)
-			if (todo.completed != completed){
-				store.dispatch('toggleTodo', {todo : todo});
-			}
+			const todo = store.state.todos.find(todo => todo.title === title && todo.completed != newStatus);
+      store.dispatch('toggleTodo', {todo : todo});
 		}
 
     return {
