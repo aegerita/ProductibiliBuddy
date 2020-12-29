@@ -10,8 +10,6 @@ import Todo from '@/components/Todos.vue'
 
 export default {
   name: 'Home',
-  components: {
-    Todo
-  }
+  components: { Todo }
 }
 </script>

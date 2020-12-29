@@ -16,7 +16,7 @@ export default {
 
     const getMessage = (username) => {
       let name = username ? username : "kind stranger";
-      var welcomes = [
+      let welcomes = [
         ["I see you are studying" , "Good for you, " + name + "!"],
         ["Nice to see you, " + name + ".", "Good luck on these tasks!"],
         ["Thank you for using me, "+name, "Link at the bottom to check out more!"],

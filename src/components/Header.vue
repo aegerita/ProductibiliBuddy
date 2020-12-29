@@ -34,9 +34,9 @@ export default {
         const newName = ref('');
 
         const rename = () => {
-            console.log("rename");
-            input.value = true;
-            nextTick(() => document.getElementById('newName').focus());
+          console.log("rename");
+          input.value = true;
+          nextTick(() => document.getElementById('newName').focus());
         };
 
         const confirmName = () => {
@@ -49,19 +49,14 @@ export default {
           newName.value = '';
         };
 
-        const clear = () => {
-          if (confirm('Are you sure you wanna abandon these precious todos?'))
-            store.dispatch('clear');
-        };
-        
-        const undo = () => store.commit('undo');
-        const redo = () => store.commit('redo');
-        const toggleDisplay = () => store.commit('toggleDisplay');
-
         return { 
             input, newName,
-            rename, confirmName, clear,
-            undo, redo, toggleDisplay,
+            rename, 
+            confirmName, 
+            undo: () => store.commit('undo'), 
+            redo: () => store.commit('redo'),
+            toggleDisplay: () => store.commit('toggleDisplay'),
+            clear: () => confirm('Are you sure you wanna abandon these precious todos?') ? store.dispatch('clear') : null,
         };
     }, 
     computed: mapState([

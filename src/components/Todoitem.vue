@@ -15,11 +15,10 @@ export default {
   props: ['todo'],
   setup(props) {
     const store = useStore();
-
-    const toggle = () => store.dispatch('toggleTodo', { todo : props.todo });
-    const deleteTodo = () => store.dispatch('deleteTodo', { todo : props.todo });
-    
-    return { toggle, deleteTodo, }
+    return { 
+      toggle: () => store.dispatch('toggleTodo', { todo : props.todo }),
+      deleteTodo: () => store.dispatch('deleteTodo', { todo : props.todo }), 
+    }
   },
   computed: mapState(['display']),
 }

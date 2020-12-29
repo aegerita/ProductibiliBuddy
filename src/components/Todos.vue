@@ -52,10 +52,6 @@ export default {
 			}
     };
 
-    const initialize = onMounted(() => {
-      store.dispatch('initialize');
-    });
-
     const drag = (evt, item) => {
 			evt.dataTransfer.dropEffect = 'move';
 			evt.dataTransfer.effectAllowed = 'move';
@@ -70,7 +66,7 @@ export default {
 		}
 
     return {
-      initialize, 
+      initialize: onMounted(() => store.dispatch('initialize')),
       drag, drop,
     }
   }, 
