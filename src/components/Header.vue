@@ -15,7 +15,7 @@
       <div class="together">
         <input @click="undo()" type="submit" value="Undo">
         <input @click="redo()" type="submit" value="Redo">
-        <input @click="clear()" type="submit" value="Clear all">
+        <input @click="clearTodo()" type="submit" value="Clear all">
       </div>
     </div>
   </header>
@@ -56,7 +56,7 @@ export default {
             undo: () => store.commit('undo'), 
             redo: () => store.commit('redo'),
             toggleDisplay: () => store.commit('toggleDisplay'),
-            clear: () => confirm('Are you sure you wanna abandon these precious todos?') ? store.dispatch('clear') : null,
+            clearTodo: () => confirm('Are you sure you wanna abandon these precious todos?') ? store.commit('clearTodo') : null,
         };
     }, 
     computed: mapState([

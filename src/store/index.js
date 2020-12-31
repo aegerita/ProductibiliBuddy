@@ -1,5 +1,21 @@
 import { createStore, createLogger } from 'vuex'
 
+const saveTodo = store => {
+  // called when the store is initialized
+  store.subscribe((mutation, state) => {
+    // called after every mutation.
+    // The mutation comes in the format of `{ type, payload }`.
+    let todoMutations = ['loadTodo', 'addTodo', 'deleteTodo', 'toggleTodo', 'clearTodo']
+    if (todoMutations.includes(mutation.type)) {
+      // remove "future" history
+      state.history = state.history.slice(0, state.historyIndex++);
+      state.history.push(JSON.parse(JSON.stringify(state.todos)));
+      const parsed = JSON.stringify(state.todos);
+      localStorage.setItem('todos', parsed);
+    }
+  })  
+}
+
 export default createStore({
   state: {
     todos: [],
@@ -25,10 +41,18 @@ export default createStore({
       localStorage.setItem('display', !state.display);
       state.display = !state.display;
     },
-    save(state){
-      // remove "future" history
-      state.history = state.history.slice(0, state.historyIndex++);
-      state.history.push(JSON.parse(JSON.stringify(state.todos)));
+    undo(state){
+      if (state.historyIndex > 1){
+        state.todos = JSON.parse(JSON.stringify(state.history[--state.historyIndex-1]));
+        console.log('copy history number ', state.historyIndex-1);
+      }
+      const parsed = JSON.stringify(state.todos);
+      localStorage.setItem('todos', parsed);
+    },
+    redo(state){
+      if (state.historyIndex < state.history.length){
+        state.todos = JSON.parse(JSON.stringify(state.history[++state.historyIndex-1]));
+      }
       const parsed = JSON.stringify(state.todos);
       localStorage.setItem('todos', parsed);
     },
@@ -47,36 +71,21 @@ export default createStore({
 			console.log("toggle item number ", state.todos.indexOf(payload.todo));
 			payload.todo.completed = !payload.todo.completed;
 			payload.todo.time = Date.now();
-		},
-    undo(state){
-      if (state.historyIndex > 1){
-        state.todos = JSON.parse(JSON.stringify(state.history[--state.historyIndex-1]));
-        console.log('copy history number ', state.historyIndex-1);
-      }
-      const parsed = JSON.stringify(state.todos);
-      localStorage.setItem('todos', parsed);
-    },
-    redo(state){
-      if (state.historyIndex < state.history.length){
-        state.todos = JSON.parse(JSON.stringify(state.history[++state.historyIndex-1]));
-      }
-      const parsed = JSON.stringify(state.todos);
-      localStorage.setItem('todos', parsed);
-    }, 
-    clear(state){
+		}, 
+    clearTodo(state){
       if (state.todos && state.todos.length != 0) state.todos = [];
     }, 
-    loadData(state){
+    loadTodo(state){
       if (localStorage.getItem('username')){
         state.username = localStorage.getItem('username');
         console.log('username:', state.username);
       }
       // do i want to detect screen width everytime?
-      /*if (localStorage.getItem('display')){
+      if (localStorage.getItem('display')){
         // can't store boolean
-        this.display = JSON.parse(localStorage.getItem('display'));
-        console.log('display:', this.display);
-      }*/
+        state.display = JSON.parse(localStorage.getItem('display'));
+        console.log('display:', state.display);
+      }
       if (localStorage.getItem('todos')) {
         try {
           state.todos = JSON.parse(localStorage.getItem('todos'));
@@ -84,50 +93,31 @@ export default createStore({
           localStorage.removeItem('todos');
         }
       } 
-      // clean history? 
-      state.historyIndex = 0;
-      state.history = [];
+      //console.log(localStorage);
     },
   },
 
   actions: {
-    initialize({ dispatch, commit } ){
-      commit('loadData');
-      commit('save');
+    initialize({ commit } ){
+      commit('loadTodo');
       if (!this.state.todos.length){
         if (localStorage.getItem('username')){
-          dispatch('addTodo', {title : "Miss me?"});
-          dispatch('addTodo', {title : "Thank you for using me..."});
-          dispatch('addTodo', {title : "It's good to see you again"});
+          commit('addTodo', {title : "Miss me?"});
+          commit('addTodo', {title : "Thank you for using me..."});
+          commit('addTodo', {title : "It's good to see you again"});
         } else {
-          dispatch('addTodo', {title : "Welcome!"});
-          dispatch('addTodo', {title : "Pls use me as much as you like"});
-          dispatch('addTodo', {title : "Hehehe..."});
+          commit('addTodo', {title : "Welcome!"});
+          commit('addTodo', {title : "Pls use me as much as you like"});
+          commit('addTodo', {title : "Hehehe..."});
         }
-        dispatch('toggleTodo', {todo : this.state.todos[2]})
+        commit('toggleTodo', {todo : this.state.todos[2]})
       }
-    },
-    addTodo( context, payload ){
-      context.commit('addTodo', payload);
-      context.commit('save');
-    },
-    deleteTodo( context, payload ){
-      context.commit('deleteTodo', payload);
-      context.commit('save');
-    },
-    toggleTodo( context, payload ){
-      context.commit('toggleTodo', payload);
-      context.commit('save');
-    },
-    clear({ commit }){
-      commit('clear');
-      commit('save');
-    },
+    }
   },
   modules: {
   },
 
   plugins: process.env.NODE_ENV !== 'production'
-    ? [createLogger()]
-    : []
+    ? [createLogger(), saveTodo]
+    : [saveTodo]
 })
