@@ -58,7 +58,7 @@ export default {
       redo: () => store.commit('redo'),
       toggleDisplay: () => store.commit('toggleDisplay'),
       clearTodo: () =>
-        confirm('Are you sure you wanna abandon these precious todos?') ? store.commit('clearTodo') : null,
+        confirm('Are you sure you wanna abandon these precious todos?') ? store.dispatch('clearTodo') : null,
     };
   },
   computed: mapState(['display', 'username']),
