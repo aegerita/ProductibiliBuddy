@@ -25,7 +25,7 @@ const plugin = store => {
 };
 
 const getMessage = (username, newList) => {
-  if (newList) newList[Math.floor(Math.random() * newList.length)];
+  if (newList) return newList[Math.floor(Math.random() * newList.length)];
   const name = username ? username : 'kind stranger';
   let welcomes = [
     ['I see you are studying', `Good for you, ${name}!`],
