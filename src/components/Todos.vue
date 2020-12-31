@@ -1,107 +1,112 @@
 <template>
   <div id="todo">
-    <Header/>
-    <AddTodo/>
+    <Welcome />
+    <Header />
+    <AddTodo />
 
     <h2 v-show="todos.every(todo => todo.completed)" @drop="drop($event, false)" @dragover.prevent @dragenter.prevent>
       All Finished! Good for you!
     </h2>
 
-    <div :class="{'horizontal' : display}">
-      
+    <div :class="{ horizontal: display }">
       <div id="left" @drop="drop($event, false)" @dragover.prevent @dragenter.prevent>
-        <h2 v-show="todos.some(todo => !todo.completed)">Todo List: </h2>
+        <h2 v-show="todos.some(todo => !todo.completed)">Todo List:</h2>
         <!-- there must be a unique key -->
         <div :key="todos.indexOf(todo)" v-for="todo in undoneTodos">
           <!-- the todo in for loop, goes to item props; drag can only be div -->
-          <div draggable @dragstart='drag($event, todo)' @drag='drag($event, todo)'>
-            <Todoitem :todo="todo"/>
-          </div>
-        </div>  
-      </div> 
-      <!-- output finished events last -->
-      <div id="right" @drop="drop($event, true)" @dragover.prevent @dragenter.prevent>
-        <h3 v-show="todos.some(todo=>todo.completed) && !todos.every(todo=>todo.completed)">Finished: </h3>
-        <div :key="todos.indexOf(todo)" v-for="todo in doneTodos">
-          <div draggable @dragstart='drag($event, todo)' @drag='drag($event, todo)'>
-            <Todoitem :todo="todo"/>
+          <div draggable @dragstart="drag($event, todo)" @drag="drag($event, todo)">
+            <Todoitem :todo="todo" />
           </div>
         </div>
       </div>
-
+      <!-- output finished events last -->
+      <div id="right" @drop="drop($event, true)" @dragover.prevent @dragenter.prevent>
+        <h3 v-show="todos.some(todo => todo.completed) && !todos.every(todo => todo.completed)">Finished:</h3>
+        <div :key="todos.indexOf(todo)" v-for="todo in doneTodos">
+          <div draggable @dragstart="drag($event, todo)" @drag="drag($event, todo)">
+            <Todoitem :todo="todo" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted } from 'vue';
 import { useStore, mapState, mapGetters } from 'vuex';
 import Header from './Header';
 import AddTodo from './AddTodo';
-import Todoitem from './Todoitem'
+import Todoitem from './Todoitem';
+import Welcome from './Message';
 
 export default {
-  components: { Header, AddTodo, Todoitem },
-  setup(){
+  components: { Header, AddTodo, Todoitem, Welcome },
+  setup() {
     const store = useStore();
 
     document.onkeydown = evt => {
-			evt = evt || window.event;
-			if (evt.ctrlKey && evt.code === 'KeyZ') {
-				evt.shiftKey ? store.commit('redo') : store.commit('undo');
-			}
+      evt = evt || window.event;
+      if (evt.ctrlKey && evt.code === 'KeyZ') evt.shiftKey ? store.commit('redo') : store.commit('undo');
     };
 
     const drag = (evt, item) => {
-			evt.dataTransfer.dropEffect = 'move';
-			evt.dataTransfer.effectAllowed = 'move';
-			evt.dataTransfer.setData('todo', item.title);
+      evt.dataTransfer.dropEffect = 'move';
+      evt.dataTransfer.effectAllowed = 'move';
+      evt.dataTransfer.setData('todo', item.title);
     };
-     
-		const drop = (evt, newStatus) => {
-			console.log("transfer this", evt.dataTransfer.getData('todo'));
-			const title = evt.dataTransfer.getData('todo');
+
+    const drop = (evt, newStatus) => {
+      console.log('transfer this', evt.dataTransfer.getData('todo'));
+      const title = evt.dataTransfer.getData('todo');
       const todo = store.state.todos.find(todo => todo.title === title && todo.completed != newStatus);
-      if (todo) store.commit('toggleTodo', {todo : todo});
-		}
+      if (todo) store.commit('toggleTodo', { todo: todo });
+    };
 
     return {
       initialize: onMounted(() => store.dispatch('initialize')),
-      drag, drop,
-    }
-  }, 
-  computed: {
-    ...mapState( ['todos', 'display'] ),
-    ...mapGetters( ['doneTodos', 'undoneTodos'] )
+      drag,
+      drop,
+    };
   },
-}
+  computed: {
+    ...mapState(['todos', 'display']),
+    ...mapGetters(['doneTodos', 'undoneTodos']),
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#todo {
+  font-family: AvenAir, Helvetica, Arial, sans-serif;
+  line-height: 1.4;
+  padding: 0 20px 42px 20px;
+}
+.horizontal {
+  display: flex;
+}
+.horizontal #left {
+  flex: 1;
+  padding: 0 15px 0 10px;
+}
+.horizontal #right {
+  flex: 1;
+  padding: 0 10px 0 15px;
+}
+@media only screen and (max-width: 700px) {
   #todo {
-    font-family: AvenAir, Helvetica, Arial, sans-serif;
-    line-height: 1.4;
-    padding: 0 20px 42px 20px;
+    padding: 0 15px;
   }
-  .horizontal {
-    display: flex;
+  .horizontal #left,
+  #right {
+    padding: 0 8px;
   }
-  .horizontal #left{
-    flex: 1;
-    padding: 0 15px 0 10px;
-  }
-  .horizontal #right{
-    flex: 1;
-    padding: 0 10px 0 15px;
-  }
-  @media only screen and (max-width: 700px) {
-    #todo { padding: 0 15px; }
-    .horizontal #left, #right{ padding: 0 8px; }
-  }
-  .horizontal h2, .horizontal h3{
-    font-size: 18px;
-    margin: 20px;
-    text-align: start;
-  }
+}
+.horizontal h2,
+.horizontal h3 {
+  font-size: 18px;
+  margin: 20px;
+  text-align: start;
+}
 </style>

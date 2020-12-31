@@ -1,16 +1,24 @@
 <template>
   <div>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home</router-link>
+      |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/> 
+    <router-view />
     <div id="tail">
       <p>
-        User data kept in local storage<br>
-        Don't eat your cookies! <br>
+        User data kept in local storage
+        <br />
+        Don't eat your cookies!
+        <br />
       </p>
-      <p><strong>More by <a href="https://github.com/aegerita">Aegerita</a></strong></p>
+      <p>
+        <strong>
+          More by
+          <a href="https://github.com/aegerita">Aegerita</a>
+        </strong>
+      </p>
     </div>
   </div>
 </template>
@@ -33,7 +41,8 @@
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active, #tail a{
+#nav a.router-link-exact-active,
+#tail a {
   color: #42b983;
 }
 
