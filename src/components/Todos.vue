@@ -1,6 +1,10 @@
 <template>
   <div id="todo">
-    <Welcome />
+    <!-- TODO make welcome store -->
+    <div style="padding-top: 10px">
+      <h2>{{ message ? message[0] : 'lol seems like there is a glitch' }}</h2>
+      <h1>{{ message ? message[1] : 'Be honoured to witness this!' }}</h1>
+    </div>
     <Header />
     <AddTodo />
 
@@ -38,12 +42,12 @@ import { useStore, mapState, mapGetters } from 'vuex';
 import Header from './Header';
 import AddTodo from './AddTodo';
 import Todoitem from './Todoitem';
-import Welcome from './Message';
 
 export default {
-  components: { Header, AddTodo, Todoitem, Welcome },
+  components: { Header, AddTodo, Todoitem },
   setup() {
     const store = useStore();
+    store.commit('refreshMessage', { newMessage: null });
 
     document.onkeydown = evt => {
       evt = evt || window.event;
@@ -70,7 +74,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['todos', 'display']),
+    ...mapState(['todos', 'display', 'message']),
     ...mapGetters(['doneTodos', 'undoneTodos']),
   },
 };
@@ -96,12 +100,20 @@ export default {
 }
 @media only screen and (max-width: 700px) {
   #todo {
-    padding: 0 15px;
+    padding: 0 15px 42px 15px;
   }
   .horizontal #left,
-  #right {
+  .horizontal #right {
     padding: 0 8px;
   }
+  h3 { font-size: 17px; }
+  h2 { font-size: 20px; }
+  h1 { font-size: 27px; }
+}
+@media only screen and (max-width: 385px) {
+  h3 { font-size: 16px; }
+  h2 { font-size: 16px; }
+  h1 { font-size: 22px; }
 }
 .horizontal h2,
 .horizontal h3 {

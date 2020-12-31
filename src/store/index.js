@@ -1,6 +1,6 @@
 import { createStore, createLogger } from 'vuex';
 
-const saveTodo = store => {
+const plugin = store => {
   // called when the store is initialized
   store.subscribe((mutation, state) => {
     // called after every mutation.
@@ -14,6 +14,38 @@ const saveTodo = store => {
       localStorage.setItem('todos', parsed);
     }
   });
+  // change messages
+  store.watch(
+    state => state.username,
+    watched => {
+      console.log('message update', watched);
+      store.state.message = getMessage(watched);
+    }
+  );
+};
+
+const getMessage = username => {
+  let name = username ? username : 'kind stranger';
+  let welcomes = [
+    ['I see you are studying', 'Good for you, ' + name + '!'],
+    ['Nice to see you, ' + name + '.', 'Good luck on these tasks!'],
+    ['Thank you for using me, ' + name, 'Link at the bottom to check out more!'],
+    ['I love the stars. ', 'Do you, ' + name + '?'],
+    ["They say ya gotta be smart 'bout how ya work", 'Good thing you use ME!'],
+    ['Hard work, perseverance, determination ... Who cares?', "Let's do whatever we want, " + name],
+    ['I will always support you, ' + name + '!', 'That is, if you finish some of these todos;)'],
+    ['I looks so pretty thanks to Vue.js', 'And of course, your support,  ' + name + '!'],
+    ['Hmmmmm, you seem stuck, ' + name, 'Have you ever thought of ... Pivoting?'],
+    ["Arbeit Macht Frei isn't good for you, " + name, 'Take some rest if you are overwhelmed!'],
+    ["How about we grab a drink after you've done all this?", 'Kidding, ' + name + ', you have too much work to do.'],
+    ['I personally prefer horizontal layout than vertical', "But it's your choice, " + name + '!'],
+    ["Aren't you glad I improved so much, " + name + '?', '哔哩哔哩(゜-゜)つロ干杯~'],
+    ["Hey, it's really nice seeing you here", 'Thanks for making me less lonely, ' + name],
+    ['Does it matter if I use Vuex, ' + name + '?', 'Apparently it does, so I tried hard!'],
+    ['Do you think I can evolve like pokemon, ' + name + '?', 'Maybe someday I can tell you the weather!'],
+    ['Jeez you are flattering me, ' + name + '!', "I'm just happy I can be useful"],
+  ];
+  return welcomes[Math.floor(Math.random() * welcomes.length)];
 };
 
 export default createStore({
@@ -23,6 +55,7 @@ export default createStore({
     historyIndex: 0,
     history: [],
     display: window.innerWidth > 500,
+    message: [],
   },
 
   getters: {
@@ -40,6 +73,10 @@ export default createStore({
       console.log('store display to', !state.display);
       localStorage.setItem('display', !state.display);
       state.display = !state.display;
+    },
+    refreshMessage(state, payload) {
+      if (payload) state.message = getMessage(state.username);
+      else state.message = payload.newMessage;
     },
     undo(state) {
       if (state.historyIndex > 1) {
@@ -116,5 +153,5 @@ export default createStore({
   },
   modules: {},
 
-  plugins: process.env.NODE_ENV !== 'production' ? [createLogger(), saveTodo] : [saveTodo],
+  plugins: process.env.NODE_ENV !== 'production' ? [createLogger(), plugin] : [plugin],
 });
