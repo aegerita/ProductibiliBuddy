@@ -25,6 +25,7 @@ const plugin = store => {
 };
 
 const getMessage = (username, newList) => {
+  if (newList) newList[Math.floor(Math.random() * newList.length)];
   const name = username ? username : 'kind stranger';
   let welcomes = [
     ['I see you are studying', `Good for you, ${name}!`],
@@ -41,10 +42,13 @@ const getMessage = (username, newList) => {
     [`Do you think I can evolve like pokemon, ${name}?`, 'Maybe someday I can tell you the weather!'],
     [`Jeez you are flattering me, ${name}!`, "I'm just happy I can be useful"],
     [`Visit "about" to check out amazing updates!`, `Can't wait to share news with you, ${name}`],
-    [`${name} ${name} ${name} ${name} ...`, `OUAH~ I just think you name is cute! That's all!`],
     [`Did I ever tell you I love to collect paintings of pretty women?`, `Oops I let it slipped ┑(￣Д ￣)┍`],
   ];
-  if (newList) welcomes = newList;
+  if (username) {
+    welcomes = welcomes.concat([
+      [`${name} ${name} ${name} ${name} ...`, `OUAH~ I just think you name is cute! That's all!`],
+    ]);
+  }
   return welcomes[Math.floor(Math.random() * welcomes.length)];
 };
 
