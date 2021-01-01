@@ -13,14 +13,13 @@
       />
       <input type="submit" value="Submit" style="margin-left: 0" />
     </form>
-
     <input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'" />
-
+    <input @click="chat()" type="submit" value="Chat" />
     <div class="together">
       <input @click="undo()" type="submit" value="Undo" />
       <input @click="redo()" type="submit" value="Redo" />
-      <input @click="clearTodo()" type="submit" value="Clear all" />
     </div>
+    <input @click="clearTodo()" type="submit" value="Clear all" />
   </div>
 </template>
 
@@ -59,6 +58,7 @@ export default {
       toggleDisplay: () => store.commit('toggleDisplay'),
       clearTodo: () =>
         confirm('Are you sure you wanna abandon these precious todos?') ? store.dispatch('clearTodo') : null,
+      chat: () => store.commit('refreshMessage', { newMessage: null }),
     };
   },
   computed: mapState(['display', 'username']),
