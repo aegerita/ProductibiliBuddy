@@ -1,5 +1,5 @@
 <template>
-  <div class="about" style="padding: 0 20px">
+  <div style="padding: 0 20px">
     <h1>Thanks for your support!</h1>
     <!-- <h2>Under contruction, thanks for your support!</h2> -->
     <div class="description">
