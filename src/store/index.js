@@ -5,7 +5,11 @@ const plugin = store => {
   store.subscribe((mutation, state) => {
     // called after every mutation.
     // The mutation comes in the format of `{ type, payload }`.
-    let todoMutations = ['loadTodo', 'addTodo', 'deleteTodo', 'toggleTodo', 'clearTodo'];
+    if (state.stats.chatNum > 1) {
+      localStorage.setItem('stats', JSON.stringify(state.stats));
+      //console.log(localStorage);
+    }
+    let todoMutations = ['addTodo', 'deleteTodo', 'toggleTodo', 'clearTodo'];
     if (todoMutations.includes(mutation.type)) {
       // remove "future" history
       state.history = state.history.slice(0, state.historyIndex++);
@@ -14,19 +18,12 @@ const plugin = store => {
       localStorage.setItem('todos', parsed);
     }
   });
-  // change messages
-  store.watch(
-    state => state.username,
-    watched => {
-      console.log('message update', watched);
-      store.state.message = getMessage(watched);
-    }
-  );
 };
 
-const getMessage = (username, newList) => {
+const getMessage = (state, newList) => {
+  state.stats.chatNum += 1;
   if (newList) return newList[Math.floor(Math.random() * newList.length)];
-  const name = username ? username : 'kind stranger';
+  const name = state.username ? state.username : 'kind stranger';
   let welcomes = [
     ['I see you are studying', `Good for you, ${name}!`],
     [`Nice to see you, ${name}.`, 'Good luck on these tasks!'],
@@ -44,7 +41,7 @@ const getMessage = (username, newList) => {
     [`Visit "about" to check out amazing updates!`, `Can't wait to share news with you, ${name}`],
     [`Did I ever tell you I love to collect paintings of pretty women?`, `Oops I let it slipped ┑(￣Д ￣)┍`],
   ];
-  if (username) {
+  if (state.username) {
     welcomes = welcomes.concat([
       [`${name} ${name} ${name} ${name} ...`, `OUAH~ I just think you name is cute! That's all!`],
     ]);
@@ -60,19 +57,29 @@ export default createStore({
     history: [],
     display: window.innerWidth > 500,
     message: [],
+    stats: {
+      chatNum: 0,
+      todoNum: 0,
+      undoNum: 0,
+      nameNum: 0,
+      deleteFinishedNum: 0,
+    },
   },
 
   getters: {
     doneTodos: state => state.todos.filter(todo => todo.completed).sort((a, b) => a.time - b.time),
     undoneTodos: state => state.todos.filter(todo => !todo.completed),
-    name: state => (state.username ? state.username : 'kind stranger'),
   },
 
   mutations: {
     rename(state, payload) {
-      console.log('store the new name', payload.name);
-      state.username = payload.name;
-      localStorage.setItem('username', payload.name);
+      if (payload.name != state.username) {
+        state.stats.nameNum += 1;
+        console.log('store the new name', payload.name);
+        state.username = payload.name;
+        localStorage.setItem('username', payload.name);
+        state.message = getMessage(state);
+      }
     },
     toggleDisplay(state) {
       console.log('store display to', !state.display);
@@ -80,11 +87,12 @@ export default createStore({
       state.display = !state.display;
     },
     refreshMessage(state, payload) {
-      if (payload) state.message = getMessage(state.username);
+      if (payload) state.message = getMessage(state);
       else state.message = payload.newMessage;
     },
     undo(state) {
       if (state.historyIndex > 1) {
+        state.stats.undoNum += 1;
         state.todos = JSON.parse(JSON.stringify(state.history[--state.historyIndex - 1]));
         console.log('copy history number ', state.historyIndex - 1);
       }
@@ -104,10 +112,12 @@ export default createStore({
         completed: false,
         time: Date.now(),
       });
+      state.stats.todoNum += 1;
     },
     deleteTodo(state, payload) {
       console.log('delete item number ', state.todos.indexOf(payload.todo));
       state.todos.splice(state.todos.indexOf(payload.todo), 1);
+      if (payload.todo.completed) state.stats.deleteFinishedNum += 1;
     },
     toggleTodo(state, payload) {
       console.log('toggle item number ', state.todos.indexOf(payload.todo));
@@ -115,12 +125,14 @@ export default createStore({
       payload.todo.time = Date.now();
     },
     clearTodo(state) {
+      state.stats.deleteFinishedNum += state.todos.filter(todo => todo.completed).length;
       if (state.todos && state.todos.length != 0) state.todos = [];
     },
     loadTodo(state) {
       if (localStorage.getItem('username')) {
         state.username = localStorage.getItem('username');
         console.log('username:', state.username);
+        state.message = getMessage(state);
       }
       // do i want to detect screen width every time?
       if (localStorage.getItem('display')) {
@@ -131,8 +143,15 @@ export default createStore({
       if (localStorage.getItem('todos')) {
         try {
           state.todos = JSON.parse(localStorage.getItem('todos'));
-        } catch (e) {
+        } catch {
           localStorage.removeItem('todos');
+        }
+      }
+      if (localStorage.getItem('stats')) {
+        try {
+          state.stats = JSON.parse(localStorage.getItem('stats'));
+        } catch {
+          localStorage.removeItem('stats');
         }
       }
       //console.log(localStorage);
@@ -153,6 +172,7 @@ export default createStore({
           commit('addTodo', { title: 'Pls use me as much as you like' });
           commit('addTodo', { title: 'Hehehe...' });
         }
+        this.state.stats.todoNum -= 3;
         commit('toggleTodo', { todo: this.state.todos[2] });
       }
     },
@@ -178,7 +198,7 @@ export default createStore({
           [`Arbeit Macht Frei isn't good for you, ${name}`, 'Take some rest if you are overwhelmed!'],
         ]);
       }
-      context.state.message = getMessage(name, messages);
+      context.state.message = getMessage(context.state, messages);
     },
     deleteTodo(context, payload) {
       context.commit('deleteTodo', payload);
@@ -203,7 +223,7 @@ export default createStore({
           [`Is "${payload.todo.title}" important to you, ${name}?`, `If it is you better explain ಠ_ಠ`],
         ]);
       }
-      context.state.message = getMessage(name, messages);
+      context.state.message = getMessage(context.state, messages);
     },
     toggleTodo(context, payload) {
       context.commit('toggleTodo', payload);
@@ -234,13 +254,13 @@ export default createStore({
           [`If you are just gonna revert it, why did you mark it before?`, `You hurt my feelings, I'm sad now T^T`],
         ]);
       }
-      context.state.message = getMessage(name, messages);
+      context.state.message = getMessage(context.state, messages);
     },
     clearTodo(context) {
       context.commit('clearTodo');
       const name = context.state.username ? context.state.username : 'kind stranger';
       let messages = [[`Wow ${name}, all of your todos are gone!`, `Is that what they say - baby clean?`]];
-      context.state.message = getMessage(name, messages);
+      context.state.message = getMessage(context.state, messages);
     },
   },
   modules: {},
