@@ -164,13 +164,13 @@ export default createStore({
       commit('loadTodo');
       if (!this.state.todos.length) {
         if (localStorage.getItem('username')) {
-          commit('addTodo', { title: 'Miss me?' });
-          commit('addTodo', { title: 'Thank you for using me...' });
-          commit('addTodo', { title: "It's good to see you again" });
+          commit('addTodo', { title: 'Welcome back!' });
+          commit('addTodo', { title: 'Add your tasks to todos' });
+          commit('addTodo', { title: "And finished them like a boss!" });
         } else {
           commit('addTodo', { title: 'Welcome!' });
-          commit('addTodo', { title: 'Pls use me as much as you like' });
-          commit('addTodo', { title: 'Hehehe...' });
+          commit('addTodo', { title: 'Add your tasks to todos' });
+          commit('addTodo', { title: 'And toggle them when you are finished' });
         }
         this.state.stats.todoNum -= 3;
         commit('toggleTodo', { todo: this.state.todos[2] });

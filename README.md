@@ -6,20 +6,19 @@ Just started learning vue. hopefully i can add back-end to this stuff later
 
 Still using vue2 for now, hopefully i can update this with vuex and vue3 before coop
 
-## Update Dec 29 2020
+## Update Jan 02 2021
 
-Now I use vuex to store all your todos! Rejoice! <br>
-Also, migrated from vue2 to vue3! With Composition API! <br>
-What is a beautiful world in front of me ...
+Vuex and Vue 3 made it a lot easier to react to user activities <br>
+Now I can talk to you more, rejoice!<br>
+Check out the stats page for you stats :)
 
 Todo list (meta)
 
-- When todos have same title, drag and drop is confused. Stop that
-- The tooltip plugin is not supported by vue3 anymore, must do it myself
-- Optimize storage with vuex
-- Make an achievement page for fun
-- Backend with firebase or something (stretch goal)
-- Update messages according to achievement and activity (stretch goal)
+- Make the stats page better looking
+- Dark mode
+- Make my own tooltip
+- Drag to order todos (if even possible)
+- Backend with firebase or something 
 
 ## Functions
 

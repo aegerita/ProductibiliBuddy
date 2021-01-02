@@ -5,28 +5,19 @@
     <div class="description">
       <div class="block1">
         <h2>Update:</h2>
-        <h3>Date: Dec 29 2020</h3>
-        Now I use vuex to store your todos! Rejoice!
+        <h3>Date: Jan 02 2021</h3>
+        With vuex, I can talk to you more, rejoice!
         <br />
-        Also, migrated from vue2 to vue3, with Composition API!
-        <br />
-        What a glorious world in front of me ...
+        Check out the stats page for you stats :)
       </div>
       <div class="block2">
         <h3 style="margin: 15px">Todo list (meta):</h3>
         <ul>
-          <li>When todos have same title, drag and drop is confused. Stop that</li>
-          <li>The tooltip plugin is not supported by vue3 anymore, must do it myself</li>
-          <li>Optimize storage with vuex</li>
-          <li>Make an achievement page for fun</li>
-          <li>
-            Backend with firebase or smth
-            <strong>(stretch goal)</strong>
-          </li>
-          <li>
-            Update messages according to achievement and activity
-            <strong>(stretch goal)</strong>
-          </li>
+          <li>Make the stats page better looking</li>
+          <li>Make my own tooltip</li>
+          <li>Dark mode</li>
+          <li>Drag to order todos (if even possible)</li>
+          <li>Backend with firebase or smth</li>
         </ul>
       </div>
     </div>
