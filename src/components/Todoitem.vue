@@ -1,9 +1,12 @@
 <template>
-  <div :class="{ complete: todo.completed }" @click="toggle()" @click.right.prevent="deleteTodo()" draggable="true">
+  <div id="container" :class="{ complete: todo.completed }" @click="toggle()" @click.right.prevent="deleteTodo()" draggable="true">
     <h3 :class="{ horizontal: display }">
       <input type="checkbox" :checked="todo.completed" />
       {{ todo.title }}
-      <button @click.stop="deleteTodo()">X</button>
+      <div>
+        <button class="tooltip" @click.stop="deleteTodo()">X</button>
+        <span class="tooltiptext">Right Click Todo to Delete Faster</span>
+      </div>
     </h3>
   </div>
 </template>
@@ -25,7 +28,7 @@ export default {
 </script>
 
 <style scoped>
-div {
+#container {
   background: #f4f4f4;
   padding: 10px;
   border: 2px #cccccc dotted;
@@ -35,16 +38,24 @@ div {
   text-decoration: line-through;
   background: #e0e0e0;
 }
+#container div {
+  position: relative;
+  display: inline-flex;
+  float: right;
+}
 button {
   background: transparent;
   color: #6f6f6f;
   font-size: 19px;
   font-weight: 500;
   cursor: pointer;
-  float: right;
   border: dotted 1px;
   padding: 4px 8px;
   border-radius: 50%;
+}
+.tooltiptext {
+  width: 105px;
+  margin-left: -47px;
 }
 h3 {
   margin: 15px 0;

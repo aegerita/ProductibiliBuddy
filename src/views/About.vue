@@ -5,8 +5,8 @@
     <div class="description">
       <div class="block1">
         <h2>Update:</h2>
-        <h3>Date: Jan 02 2021</h3>
-        With vuex, I can talk to you more, rejoice!
+        <h3>Date: Jan 08 2021</h3>
+        Made my own tooltip with CSS
         <br />
         Check out the stats page for you stats :)
       </div>
@@ -14,10 +14,10 @@
         <h3 style="margin: 15px">Todo list (meta):</h3>
         <ul>
           <li>Make the stats page better looking</li>
-          <li>Make my own tooltip</li>
           <li>Dark mode</li>
           <li>Drag to order todos (if even possible)</li>
-          <li>Backend with firebase or smth</li>
+          <li>Backend with mongodb or smth</li>
+          <li>Hopefully turn the whole thing to typescript</li>
         </ul>
       </div>
     </div>

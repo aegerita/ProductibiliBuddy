@@ -4,21 +4,21 @@ A web app for me to keep track of assignments, quiz and the like
 
 Just started learning vue. hopefully i can add back-end to this stuff later
 
-Still using vue2 for now, hopefully i can update this with vuex and vue3 before coop
+Meanwhile, please enjoy all the fun!
 
-## Update Jan 02 2021
+## Update Jan 08 2021
 
 Vuex and Vue 3 made it a lot easier to react to user activities <br>
-Now I can talk to you more, rejoice!<br>
+Made my own tooltip with CSS as well<br>
 Check out the stats page for you stats :)
 
 Todo list (meta)
 
 - Make the stats page better looking
 - Dark mode
-- Make my own tooltip
 - Drag to order todos (if even possible)
-- Backend with firebase or something 
+- Backend with mongodb or something 
+- Hopefully turn the whole thing into typescript
 
 ## Functions
 

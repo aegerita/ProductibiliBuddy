@@ -14,10 +14,19 @@
       <input type="submit" value="Submit" style="margin-left: 0" />
     </form>
     <input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'" />
-    <input @click="chat()" type="submit" value="Chat" />
     <div class="together">
-      <input @click="undo()" type="submit" value="Undo" />
-      <input @click="redo()" type="submit" value="Redo" />
+      <input class="tooltip" @click="chat()" type="submit" value="Chat" />
+      <span id="chat" class="tooltiptext">Whatsup homie?</span>
+    </div>
+    <div class="together">
+      <div>
+        <input class="tooltip" @click="undo()" type="submit" value="Undo" />
+        <span class="tooltiptext">Ctrl+Z</span>
+      </div>
+      <div>
+        <input class="tooltip" @click="redo()" type="submit" value="Redo" />
+        <span class="tooltiptext">Ctrl+Shift+Z</span>
+      </div>
     </div>
     <input @click="clearTodo()" type="submit" value="Clear all" />
   </div>
@@ -80,6 +89,13 @@ input {
   background: #f6f6f6;
 }
 .together {
+  position: relative;
   display: inline-flex;
+}
+.tooltiptext {
+  margin-left: -50%;
+}
+#chat {
+  width: 110px;
 }
 </style>
