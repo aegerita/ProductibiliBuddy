@@ -15,7 +15,8 @@ import { useStore, mapState, mapGetters } from 'vuex';
 export default {
   setup() {
     const store = useStore();
-    if (store.state.stats.chatNum < 1) store.dispatch('initialize');
+    if (store.state.stats.chatNum < 1) store.commit('loadStats');
+    else console.log("do not load from status page");
   },
   computed: {
     ...mapState(['stats']),

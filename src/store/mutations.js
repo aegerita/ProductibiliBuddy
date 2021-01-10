@@ -6,7 +6,7 @@ const rename = (state, payload) => {
     console.log('store the new name', payload.name);
     state.username = payload.name;
     localStorage.setItem('username', payload.name);
-    state.message = getMessage(state);
+    getMessage(state, 'defaultMessage');
   }
 };
 const toggleDisplay = state => {
@@ -14,10 +14,8 @@ const toggleDisplay = state => {
   localStorage.setItem('display', !state.display);
   state.display = !state.display;
 };
-
-const refreshMessage = (state, payload) => {
-  if (payload) state.message = getMessage(state);
-  else state.message = payload.newMessage;
+const refreshMessage = (state) => {
+  getMessage(state, 'defaultMessage');
 };
 
 const undo = state => {
@@ -60,23 +58,27 @@ const clearTodo = state => {
   if (state.todos && state.todos.length != 0) state.todos = [];
 };
 const loadTodo = state => {
-  if (localStorage.getItem('username')) {
-    state.username = localStorage.getItem('username');
-    console.log('username:', state.username);
-    state.message = getMessage(state);
-  }
-  // do i want to detect screen width every time?
-  if (localStorage.getItem('display')) {
-    // can't store boolean
-    state.display = JSON.parse(localStorage.getItem('display'));
-    console.log('display:', state.display);
-  }
   if (localStorage.getItem('todos')) {
     try {
       state.todos = JSON.parse(localStorage.getItem('todos'));
     } catch {
       localStorage.removeItem('todos');
     }
+  }
+  if (localStorage.getItem('username')) {
+    state.username = localStorage.getItem('username');
+    //console.log('username:', state.username);
+  }
+  getMessage(state, 'defaultMessage');
+  //console.log(localStorage);
+  //localStorage.clear();
+};
+const loadStats = state => {
+  // do i want to detect screen width every time?
+  if (localStorage.getItem('display')) {
+    // can't store boolean
+    state.display = JSON.parse(localStorage.getItem('display'));
+    //console.log('display:', state.display);
   }
   if (localStorage.getItem('stats')) {
     try {
@@ -85,9 +87,7 @@ const loadTodo = state => {
       localStorage.removeItem('stats');
     }
   }
-  //console.log(localStorage);
-  //localStorage.clear();
-};
+}
 
 export default {
   rename,
@@ -100,4 +100,5 @@ export default {
   toggleTodo,
   clearTodo,
   loadTodo,
+  loadStats,
 };

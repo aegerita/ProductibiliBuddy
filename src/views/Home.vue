@@ -46,7 +46,6 @@ export default {
   components: { TheButtonBar, TheAddTodoBar, TodoItem },
   setup() {
     const store = useStore();
-    store.commit('refreshMessage', { newMessage: null });
 
     document.onkeydown = evt => {
       evt = evt || window.event;

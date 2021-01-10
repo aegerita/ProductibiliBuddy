@@ -15,7 +15,7 @@
     </form>
     <input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'" />
     <div class="together">
-      <input class="tooltip" @click="chat({ newMessage: null })" type="submit" value="Chat" />
+      <input class="tooltip" @click="refreshMessage()" type="submit" value="Chat" />
       <span id="chat" class="tooltiptext">Whatsup homie?</span>
     </div>
     <div class="together">
@@ -66,10 +66,7 @@ export default {
       clearTodo: () =>
         confirm('Are you sure you wanna abandon these precious todos?') ? store.dispatch('clearTodo') : null,
 
-      ...mapMutations(['undo', 'redo', 'toggleDisplay']),
-      ...mapMutations({
-        chat: 'refreshMessage',
-      }),
+      ...mapMutations(['undo', 'redo', 'toggleDisplay', 'refreshMessage']),
     };
   },
   computed: mapState(['display', 'username']),
