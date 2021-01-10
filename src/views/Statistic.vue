@@ -16,7 +16,7 @@ export default {
   setup() {
     const store = useStore();
     if (store.state.stats.chatNum < 1) store.commit('loadStats');
-    else console.log("do not load from status page");
+    else console.log('do not load from status page');
   },
   computed: {
     ...mapState(['stats']),

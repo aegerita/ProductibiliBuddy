@@ -42,7 +42,6 @@
   color: #2c3e50;
 }
 #nav a.router-link-exact-active,
-
 #tail a {
   color: #42b983;
 }

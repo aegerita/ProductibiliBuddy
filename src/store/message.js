@@ -2,7 +2,7 @@ export const getMessage = (state, userActivity, payload, stateInfo) => {
   state.stats.chatNum += 1;
   localStorage.setItem('stats', JSON.stringify(state.stats));
 
-  console.log("this is chat number", state.stats.chatNum, userActivity)
+  console.log('this is chat number', state.stats.chatNum, userActivity);
   const name = state.username || 'kind stranger';
   //const welcomes = eval(userActivity+`('${name}')`);
   const welcomes = window[userActivity](name, payload, stateInfo);
@@ -77,7 +77,7 @@ window.deleteTodoMessage = (name, payload, stateInfo) => {
     ]);
   }
   return messages;
-}
+};
 window.toggleTodoMessage = (name, payload, stateInfo) => {
   let messages = [];
   if (payload.todo.completed) {
@@ -105,7 +105,7 @@ window.toggleTodoMessage = (name, payload, stateInfo) => {
     ]);
   }
   return messages;
-}
-window.clearTodoMessage = (name) => {
+};
+window.clearTodoMessage = name => {
   return [[`Wow ${name}, all of your todos are gone!`, `Is that what they say - baby clean?`]];
-}
+};

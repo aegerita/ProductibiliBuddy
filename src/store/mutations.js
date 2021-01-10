@@ -14,7 +14,7 @@ const toggleDisplay = state => {
   localStorage.setItem('display', !state.display);
   state.display = !state.display;
 };
-const refreshMessage = (state) => {
+const refreshMessage = state => {
   getMessage(state, 'defaultMessage');
 };
 
@@ -42,20 +42,26 @@ const addTodo = (state, payload) => {
     time: Date.now(),
   });
   state.stats.todoNum += 1;
+  const length = state.todos.filter(todo => !todo.completed).length;
+  getMessage(state, 'addTodoMessage', payload, length);
 };
 const deleteTodo = (state, payload) => {
   console.log('delete item number ', state.todos.indexOf(payload.todo));
   state.todos.splice(state.todos.indexOf(payload.todo), 1);
   if (payload.todo.completed) state.stats.deleteFinishedNum += 1;
+  getMessage(state, 'deleteTodoMessage', payload, state.todos.length);
 };
 const toggleTodo = (state, payload) => {
   console.log('toggle item number ', state.todos.indexOf(payload.todo));
   payload.todo.completed = !payload.todo.completed;
   payload.todo.time = Date.now();
+  const length = state.todos.filter(todo => !todo.completed).length;
+  getMessage(state, 'toggleTodoMessage', payload, length);
 };
 const clearTodo = state => {
   state.stats.deleteFinishedNum += state.todos.filter(todo => todo.completed).length;
   if (state.todos && state.todos.length != 0) state.todos = [];
+  getMessage(state, 'clearTodoMessage');
 };
 const loadTodo = state => {
   if (localStorage.getItem('todos')) {
@@ -87,7 +93,7 @@ const loadStats = state => {
       localStorage.removeItem('stats');
     }
   }
-}
+};
 
 export default {
   rename,

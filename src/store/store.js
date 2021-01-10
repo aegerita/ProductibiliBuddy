@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-import actions from './actions';
 import mutations from './mutations';
 import plugins from './plugins';
 
@@ -26,6 +25,24 @@ export default createStore({
   },
 
   mutations,
-  actions,
+  actions: {
+    initialize: ({ state, commit }) => {
+      commit('loadStats');
+      commit('loadTodo');
+      if (!state.todos.length) {
+        if (localStorage.getItem('username')) {
+          commit('addTodo', { title: 'Welcome back!' });
+          commit('addTodo', { title: 'Add your tasks to todos' });
+          commit('addTodo', { title: 'And finished them like a boss!' });
+        } else {
+          commit('addTodo', { title: 'Welcome!' });
+          commit('addTodo', { title: 'Add your tasks to todos' });
+          commit('addTodo', { title: 'And toggle them when you are finished' });
+        }
+        state.stats.todoNum -= 3;
+        commit('toggleTodo', { todo: state.todos[2] });
+      }
+    },
+  },
   plugins,
 });

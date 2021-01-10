@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   props: {
@@ -28,7 +28,7 @@ export default {
   },
   setup() {
     return {
-      ...mapActions({
+      ...mapMutations({
         toggle: 'toggleTodo',
         deleteTodo: 'deleteTodo',
       }),

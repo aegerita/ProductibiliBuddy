@@ -64,7 +64,7 @@ export default {
       confirmName,
 
       clearTodo: () =>
-        confirm('Are you sure you wanna abandon these precious todos?') ? store.dispatch('clearTodo') : null,
+        confirm('Are you sure you wanna abandon these precious todos?') ? store.commit('clearTodo') : null,
 
       ...mapMutations(['undo', 'redo', 'toggleDisplay', 'refreshMessage']),
     };

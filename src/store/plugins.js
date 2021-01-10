@@ -15,9 +15,8 @@ const plugin = store => {
       const parsed = JSON.stringify(state.todos);
       state.history.push(JSON.parse(parsed));
       localStorage.setItem('todos', parsed);
-
-      // when the page reload, history may not change
     } else if (mutation.type == 'loadTodo') {
+      // when the page reload, history may not change
       const array1 = state.todos;
       const array2 = state.history[state.historyIndex - 1];
       let isEqual = false;
