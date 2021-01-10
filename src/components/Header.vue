@@ -15,7 +15,7 @@
     </form>
     <input @click="toggleDisplay()" type="submit" :value="display ? 'Vertical' : 'Horizontal'" />
     <div class="together">
-      <input class="tooltip" @click="chat()" type="submit" value="Chat" />
+      <input class="tooltip" @click="chat({ newMessage: null })" type="submit" value="Chat" />
       <span id="chat" class="tooltiptext">Whatsup homie?</span>
     </div>
     <div class="together">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { useStore, mapState } from 'vuex';
+import { useStore, mapState, mapMutations } from 'vuex';
 import { ref, nextTick } from 'vue';
 
 export default {
@@ -62,12 +62,14 @@ export default {
       newName,
       rename,
       confirmName,
-      undo: () => store.commit('undo'),
-      redo: () => store.commit('redo'),
-      toggleDisplay: () => store.commit('toggleDisplay'),
+
       clearTodo: () =>
         confirm('Are you sure you wanna abandon these precious todos?') ? store.dispatch('clearTodo') : null,
-      chat: () => store.commit('refreshMessage', { newMessage: null }),
+
+      ...mapMutations(['undo', 'redo', 'toggleDisplay']),
+      ...mapMutations({
+        chat: 'refreshMessage',
+      }),
     };
   },
   computed: mapState(['display', 'username']),

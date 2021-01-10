@@ -106,14 +106,26 @@ export default {
   .horizontal #right {
     padding: 0 8px;
   }
-  h3 { font-size: 17px; }
-  h2 { font-size: 20px; }
-  h1 { font-size: 27px; }
+  h3 {
+    font-size: 17px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  h1 {
+    font-size: 27px;
+  }
 }
 @media only screen and (max-width: 385px) {
-  h3 { font-size: 16px; }
-  h2 { font-size: 16px; }
-  h1 { font-size: 22px; }
+  h3 {
+    font-size: 16px;
+  }
+  h2 {
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 22px;
+  }
 }
 .horizontal h2,
 .horizontal h3 {

@@ -1,10 +1,16 @@
 <template>
-  <div id="container" :class="{ complete: todo.completed }" @click="toggle()" @click.right.prevent="deleteTodo()" draggable="true">
+  <div
+    class="container"
+    :class="{ complete: todo.completed }"
+    @click="toggle({ todo: todo })"
+    @click.right.prevent="deleteTodo({ todo: todo })"
+    draggable="true"
+  >
     <h3 :class="{ horizontal: display }">
       <input type="checkbox" :checked="todo.completed" />
       {{ todo.title }}
       <div>
-        <button class="tooltip" @click.stop="deleteTodo()">X</button>
+        <button class="tooltip" @click.stop="deleteTodo({ todo: todo })">X</button>
         <span class="tooltiptext">Right Click Todo to Delete Faster</span>
       </div>
     </h3>
@@ -12,15 +18,16 @@
 </template>
 
 <script>
-import { useStore, mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   props: ['todo'],
-  setup(props) {
-    const store = useStore();
+  setup() {
     return {
-      toggle: () => store.dispatch('toggleTodo', { todo: props.todo }),
-      deleteTodo: () => store.dispatch('deleteTodo', { todo: props.todo }),
+      ...mapActions({
+        toggle: 'toggleTodo',
+        deleteTodo: 'deleteTodo',
+      }),
     };
   },
   computed: mapState(['display']),
@@ -28,7 +35,7 @@ export default {
 </script>
 
 <style scoped>
-#container {
+.container {
   background: #f4f4f4;
   padding: 10px;
   border: 2px #cccccc dotted;
@@ -38,7 +45,7 @@ export default {
   text-decoration: line-through;
   background: #e0e0e0;
 }
-#container div {
+.container div {
   position: relative;
   display: inline-flex;
   float: right;
