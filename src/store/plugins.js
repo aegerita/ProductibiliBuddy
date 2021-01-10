@@ -9,14 +9,9 @@ const plugin = store => {
 
     let todoMutations = ['addTodo', 'deleteTodo', 'toggleTodo', 'clearTodo'];
     if (todoMutations.includes(mutation.type)) {
-      // remove "future" history
-      console.log('store new history', state.historyIndex);
-      state.history = state.history.slice(0, state.historyIndex++);
-      const parsed = JSON.stringify(state.todos);
-      state.history.push(JSON.parse(parsed));
-      localStorage.setItem('todos', parsed);
-    } else if (mutation.type == 'loadTodo') {
+      saveNewHistory(state);
       // when the page reload, history may not change
+    } else if (mutation.type == 'loadTodo') {
       const array1 = state.todos;
       const array2 = state.history[state.historyIndex - 1];
       let isEqual = false;
@@ -25,15 +20,18 @@ const plugin = store => {
       if (array1 && array2) {
         isEqual = array1.length === array2.length && array1.every((value, index) => objectsEqual(value, array2[index]));
       }
-      if (isEqual) return;
-      console.log('store new history', state.historyIndex);
-      state.history = state.history.slice(0, state.historyIndex++);
-      const parsed = JSON.stringify(state.todos);
-      state.history.push(JSON.parse(parsed));
-      localStorage.setItem('todos', parsed);
+      if (!isEqual) saveNewHistory(state);
     }
   });
 };
 
 export default [plugin];
 //export default process.env.NODE_ENV !== 'production' ? [createLogger(), plugin] : [plugin];
+
+function saveNewHistory(state) {
+  console.log('store new history', state.historyIndex);
+  state.history = state.history.slice(0, state.historyIndex++);
+  const parsed = JSON.stringify(state.todos);
+  state.history.push(JSON.parse(parsed));
+  localStorage.setItem('todos', parsed);
+}
