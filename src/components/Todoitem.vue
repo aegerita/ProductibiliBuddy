@@ -21,7 +21,11 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  props: ['todo'],
+  props: {
+    todo: {
+      completed: Boolean,
+    },
+  },
   setup() {
     return {
       ...mapActions({
