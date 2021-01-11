@@ -33,7 +33,6 @@
           <li>
             Keyboard shortcuts &
             <s>Tooltips</s>
-            <strong>(temporarily disabled)</strong>
           </li>
           <li>Easter eggs</li>
         </ul>
