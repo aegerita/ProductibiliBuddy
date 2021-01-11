@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>
       |
@@ -15,19 +15,17 @@
         Don't eat your cookies!
         <br />
       </p>
-      <p>
-        <strong>
-          More by
-          <a href="https://github.com/aegerita">Aegerita</a>
-        </strong>
-      </p>
+      <h3>
+        More by
+        <a href="https://github.com/aegerita">Aegerita</a>
+      </h3>
     </div>
   </div>
 </template>
 
 <style>
 #app {
-  font-family: 'Avenir', 'Nunito', Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -35,6 +33,7 @@
 }
 
 #nav {
+  font-family: 'Avenir Heavy', Arial, sans-serif;
   padding: 10px;
 }
 #nav a {
@@ -44,6 +43,10 @@
 #nav a.router-link-exact-active,
 #tail a {
   color: #42b983;
+}
+#tail h3 {
+  font-family: 'Avenir Heavy', Arial, sans-serif;
+  font-size: 16px;
 }
 #tail {
   margin-top: 10px;

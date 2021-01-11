@@ -1,6 +1,6 @@
 <template>
-  <h1 style="padding: 0 20px">In this session, you have:</h1>
-  <div style="padding: 10px">
+  <h1 style="padding: 0 20px; font-family: 'Avenir Heavy', Arial, sans-serif;">In this session, you have:</h1>
+  <div style="padding: 10px; font-family: 'Avenir Heavy', Arial, sans-serif;">
     <h3>Chat with me {{ stats.chatNum }} times</h3>
     <h3>Added a total of {{ stats.todoNum }} todos</h3>
     <h3>Undo your actions {{ stats.undoNum }} times</h3>

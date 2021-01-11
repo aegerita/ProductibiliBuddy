@@ -30,10 +30,7 @@
           <li>Horizontal / Vertical layouts</li>
           <li>Undo / Redo</li>
           <li>Drag and drop (with html)</li>
-          <li>
-            Keyboard shortcuts &
-            <s>Tooltips</s>
-          </li>
+          <li>Keyboard shortcuts & Tooltips</li>
           <li>Easter eggs</li>
         </ul>
       </div>
@@ -53,6 +50,9 @@
 </template>
 
 <style scoped>
+h1, h2, h3 {
+  font-family: 'Avenir Heavy', Arial, sans-serif;
+}
 .description {
   display: flex;
   padding: 0 40pt;
