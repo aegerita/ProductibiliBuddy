@@ -1,10 +1,12 @@
 # Todo List
 
-A web app for me to keep track of assignments, quiz and the like
+A web app for me and my friends to keep track of assignments, quiz and the like
 
-Just started learning vue. hopefully i can add back-end to this stuff later
+Thank Miscry for comparing this silly app to "A cozy tavern in the middle of a winter storm", that is my motivation right there! 
 
-Meanwhile, please enjoy all the fun!
+Please do play around and check out all the easter eggs! 
+
+Should be compatible to most browers and screen sizes
 
 ## Update Jan 08 2021
 
@@ -14,10 +16,11 @@ Check out the stats page for you stats :)
 
 Todo list (meta)
 
+- Delete the initial testing todos
 - Make the stats page better looking
 - Dark mode
 - Drag to order todos (if even possible)
-- Backend with mongodb or something 
+- Backend with mongodb if ppl want to store on cloud (why?)
 - Hopefully turn the whole thing into typescript
 
 ## Functions
@@ -27,11 +30,11 @@ Todo list (meta)
 - Horizontal / Vertical layouts
 - Undo / Redo
 - Drag and drop (with html)
-- Keyboard shortcuts & ~~Tooltips~~ (temporarily disabled)
+- Keyboard shortcuts & Tooltips
   - undo: ctrl+z
   - redo: ctrl+shift+z
   - delete todo: right click
-- Easter eggs
+- Countless useless easter eggs
 
 ## Vue
 
