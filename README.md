@@ -2,9 +2,10 @@
 
 A web app for me and my friends to keep track of assignments, quiz and the like
 
-Thank Miscry for comparing this silly app to "A cozy tavern in the middle of a winter storm", that is my motivation right there! 
+Thank Miscry for comparing this silly app to "a cozy tavern in the middle of a winter storm" <3 
+That is my motivation right there! 
 
-Please do play around and check out all the easter eggs! 
+Please do play around and check out all the easter eggs ;)
 
 Should be compatible to most browers and screen sizes
 
