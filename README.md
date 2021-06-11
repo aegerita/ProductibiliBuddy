@@ -9,33 +9,14 @@ Please do play around and check out all the easter eggs ;)
 
 Should be compatible to most browers and screen sizes
 
-## Update Jan 08 2021
+### Home
+![image](https://user-images.githubusercontent.com/56517153/121624145-ff017200-ca3e-11eb-86f6-a8a0c203a31a.png)
 
-Vuex and Vue 3 made it a lot easier to react to user activities <br>
-Made my own tooltip with CSS as well<br>
-Check out the stats page for you stats :)
+### Stats
+![image](https://user-images.githubusercontent.com/56517153/121624161-0759ad00-ca3f-11eb-8852-a754b9ed5c33.png)
 
-Todo list (meta)
-
-- Delete the initial testing todos
-- Make the stats page better looking
-- Dark mode
-- Drag to order todos (if even possible)
-- Backend with mongodb if ppl want to store on cloud (why?)
-- Hopefully turn the whole thing into typescript
-
-## Functions
-
-- Kindly greets you with random phrases
-- Store todos in cookies
-- Horizontal / Vertical layouts
-- Undo / Redo
-- Drag and drop (with html)
-- Keyboard shortcuts & Tooltips
-  - undo: ctrl+z
-  - redo: ctrl+shift+z
-  - delete todo: right click
-- Countless useless easter eggs
+### About
+![image](https://user-images.githubusercontent.com/56517153/121624059-d4171e00-ca3e-11eb-8e9b-4d9582fd2a02.png)
 
 ## Vue
 
