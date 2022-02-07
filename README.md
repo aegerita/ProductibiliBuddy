@@ -1,4 +1,4 @@
-# Todo List
+# ProductibiliBuddy
 
 A web app for me and my friends to keep track of assignments, quiz and the like
 
